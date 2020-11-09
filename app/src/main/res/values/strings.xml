@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Android-Project1</string>
+
+    <!-- View strings -->
+    <!--id format: {view id}_{language prefix}-->
+    <!--Language prefixes: French: fr, English: en-->
+    <string name="login_email_label_en">Email</string>
+    <string name="login_email_label_fr">Adresse Courriel</string>
+
+    <string name="login_password_label_en">Password</string>
+    <string name="login_password_label_fr">Mot de passe</string>
+
+    <string name="login_login_button_en">Login</string>
+    <string name="login_login_button_fr">Ouvrir la session</string>
+
+
+    <!--/View strings-->
 </resources>

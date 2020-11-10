@@ -13,6 +13,9 @@
     <string name="login_login_button_en">Login</string>
     <string name="login_login_button_fr">Ouvrir la session</string>
 
+    <string name="login_login_as_guest_button_en">Login as guest</string>
+    <string name="login_login_as_guest_button_fr">Se connecté entant qu\'invité</string>
+
 
     <!--/View strings-->
 </resources>

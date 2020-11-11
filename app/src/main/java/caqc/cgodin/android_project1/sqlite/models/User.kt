@@ -16,6 +16,7 @@ class User() : SqlEntity(User::class){
     var email: String? = null
     var password: String? = null
     var username: String? = null
+    private var test: String = "Banana"
 
     constructor(email: String, password:String, username: String) : this(){
         this.email = email

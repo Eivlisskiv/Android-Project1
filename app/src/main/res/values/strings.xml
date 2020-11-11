@@ -1,10 +1,17 @@
 <resources>
     <string name="app_name">Android-Project1</string>
 
-    <!-- View strings -->
     <!--id format: {view id}_{language prefix}-->
     <!--Language prefixes: French: fr, English: en-->
 
+    <!-- Errors -->
+    <!-- EditText (Fields) -->
+    <string name="tbError_empty_fr">Entrée Vide</string>
+    <string name="tbError_empty_en">Empty Field</string>
+
+    <!-- /Errors -->
+
+    <!-- View strings -->
     <!--Main Activity-->
     <string name="login_email_label_en">Email</string>
     <string name="login_email_label_fr">Adresse Courriel</string>

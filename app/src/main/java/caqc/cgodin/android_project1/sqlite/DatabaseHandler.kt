@@ -29,11 +29,11 @@ class DatabaseHandler(name: String, vararg ttables: KClass<*>) : SQLiteOpenHelpe
 
     override fun onCreate(db: SQLiteDatabase?) {
         //Get and join classes' create table sql query
-        val query = tables.map { it ->
+        val query = tables.joinToString(separator = "\n") { it ->
             //if is extends from SqlEntity
             if (it.isSubclassOf(SqlEntity::class)) SqlEntity.toSqlTable(it)
             else ""
-        }.joinToString(separator = "\n")
+        }
 
         Log.i("Query", query)
 

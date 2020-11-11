@@ -14,16 +14,19 @@ import kotlin.reflect.KProperty
 class Utils {
 
     companion object Factory {
-        fun findViewString(activity: AppCompatActivity, viewName: String, lang: String):String?{
+        private fun findViewString(activity: AppCompatActivity, viewName: String, lang: String):String?{
             val id = activity.resources.getIdentifier("${viewName}_$lang", "string", activity.packageName)
             return if(id != 0) activity.resources.getString(id) else null;
         }
 
+        fun getLangString(activity: AppCompatActivity, name: String, defaultLang: String = "en"): String{
+            return findViewString(activity, name, Locale.getDefault().language)
+                ?: findViewString(activity, name, defaultLang)
+                ?: name;
+        }
+
         fun findViewString(activity: AppCompatActivity, baseId:Int, defaultLang: String = "en"): String {
-            val viewName = activity.resources.getResourceEntryName(baseId);
-            return findViewString(activity, viewName, Locale.getDefault().language)
-                ?: findViewString(activity, viewName, defaultLang)
-                ?: viewName;
+            return getLangString(activity, activity.resources.getResourceEntryName(baseId), defaultLang)
         }
 
         fun getFields(clazz: KClass<*>): List<KMutableProperty<*>> {

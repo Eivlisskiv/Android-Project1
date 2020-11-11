@@ -1,6 +1,5 @@
 package caqc.cgodin.android_project1
 
-import android.util.Log
 import caqc.cgodin.android_project1.sqlite.models.User
 import kotlin.random.Random
 
@@ -15,6 +14,10 @@ class Session {
             if(user == null || user.password != pwd) return false;
             current_session = Session(user)
             return true
+        }
+
+        fun connect(user:User){
+            current_session = Session(user);
         }
 
         fun anonymous(){

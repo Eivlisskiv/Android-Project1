@@ -1,22 +1,23 @@
-package caqc.cgodin.android_project1
+package caqc.cgodin.android_project1.activities
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import caqc.cgodin.android_project1.R
+import caqc.cgodin.android_project1.Session
 import caqc.cgodin.android_project1.sqlite.DatabaseHandler
-import caqc.cgodin.android_project1.sqlite.SqlEntity
 import caqc.cgodin.android_project1.sqlite.models.User
-import kotlinx.android.synthetic.main.create_account.*
+import kotlinx.android.synthetic.main.activity_register.*
 import kotlin.random.Random
 
-class CreateAccount : ActivityExtension() {
+class RegisterActivity : ActivityExtension() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.create_account, arrayOf(
-            R.id.register_email_label, R.id.register_password_label,
-            R.id.register_cancel_button, R.id.register_register_button
+        setContentView(
+            R.layout.activity_register, arrayOf(
+                R.id.register_email_label, R.id.register_password_label,
+                R.id.register_cancel_button, R.id.register_register_button
         ))
     }
 
@@ -24,20 +25,16 @@ class CreateAccount : ActivityExtension() {
         val email = register_email_tb.text;
         val pwd = register_password_tb.text;
 
-        if(email.isEmpty() || email.isNullOrBlank() || pwd.isEmpty() || pwd.isNullOrBlank()){
-            return
-        }
+        if(verifyInputs(register_email_tb, register_password_tb)) return;
 
         val user = User(email.toString(), pwd.toString(), "User${Random.nextInt(1000, 9999)}")
         DatabaseHandler.database.insert(user);
-
-        //TODO switch to profile or main map
-        //startActivity(Intent(this@CreateAccount, MainActivity::class.java))
+        Session.connect(user);
+        switchActivity(this@RegisterActivity, ProfileActivity::class.java, null)
     }
 
     fun onClick_cancel(view: View?){
-        test();
-        //startActivity(Intent(this@CreateAccount, MainActivity::class.java))
+        switchActivity(this@RegisterActivity, MainActivity::class.java, null)
     }
 
     fun test(){

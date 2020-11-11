@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".CreateAccount">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -27,14 +27,14 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/login_email_label"
+                android:id="@+id/register_email_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="TextView" />
 
             <EditText
-                android:id="@+id/login_email_tb"
+                android:id="@+id/register_email_tb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -49,34 +49,33 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/login_password_label"
+                android:id="@+id/register_password_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="TextView" />
 
             <EditText
-                android:id="@+id/login_password_tb"
+                android:id="@+id/register_password_tb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:autoText="false"
                 android:ems="10"
                 android:inputType="textPassword" />
         </LinearLayout>
 
         <Button
-            android:id="@+id/login_login_button"
+            android:id="@+id/register_register_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="login_button"
+            android:onClick="onClick_register"
             android:text="Button" />
 
         <Button
-            android:id="@+id/login_register_button"
+            android:id="@+id/register_cancel_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="register"
+            android:onClick="onClick_cancel"
             android:text="Button" />
 
     </LinearLayout>

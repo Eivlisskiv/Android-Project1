@@ -6,6 +6,10 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import java.util.*
+import kotlin.reflect.KCallable
+import kotlin.reflect.KClass
+import kotlin.reflect.KMutableProperty
+import kotlin.reflect.KProperty
 
 class Utils {
 
@@ -20,6 +24,10 @@ class Utils {
             return findViewString(activity, viewName, Locale.getDefault().language)
                 ?: findViewString(activity, viewName, defaultLang)
                 ?: viewName;
+        }
+
+        fun getFields(clazz: KClass<*>): List<KMutableProperty<*>> {
+            return clazz.members.filterIsInstance<KMutableProperty<*>>() //{ it is KProperty<*> }
         }
     }
 }

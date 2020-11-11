@@ -4,6 +4,8 @@
     <!-- View strings -->
     <!--id format: {view id}_{language prefix}-->
     <!--Language prefixes: French: fr, English: en-->
+
+    <!--Main Activity-->
     <string name="login_email_label_en">Email</string>
     <string name="login_email_label_fr">Adresse Courriel</string>
 
@@ -11,11 +13,22 @@
     <string name="login_password_label_fr">Mot de passe</string>
 
     <string name="login_login_button_en">Login</string>
-    <string name="login_login_button_fr">Ouvrir la session</string>
+    <string name="login_login_button_fr">Connexion</string>
 
-    <string name="login_login_as_guest_button_en">Login as guest</string>
-    <string name="login_login_as_guest_button_fr">Se connecté entant qu\'invité</string>
+    <string name="login_register_button_en">Sign Up</string>
+    <string name="login_register_button_fr">Inscription</string>
 
+    <!--CreateAccount-->
+    <string name="register_email_label_en">Email</string>
+    <string name="register_email_label_fr">Adresse Courriel</string>
 
+    <string name="register_password_label_en">Password</string>
+    <string name="register_password_label_fr">Mot de passe</string>
+
+    <string name="register_concel_button_en">Cancel</string>
+    <string name="register_cancel_button_fr">Annuler</string>
+
+    <string name="register_register_button_en">Confirm</string>
+    <string name="register_register_button_fr">Confirmer</string>
     <!--/View strings-->
 </resources>

@@ -33,9 +33,8 @@ abstract class EntityDatabase : RoomDatabase()  {
         }
     }
 
-    fun <T> getQuery(query:String, vararg args:Object) : LiveData<List<T>> {
-        return  (dao().rawQuery( if(args.isNotEmpty()) SimpleSQLiteQuery(query, args)
+    fun <T> getQuery(query:String, vararg args:Any) : LiveData<List<T>> {
+        return dao().rawQuery( if(args.isNotEmpty()) SimpleSQLiteQuery(query, args)
         else SimpleSQLiteQuery(query)) as LiveData<List<T>>
-                )
     }
 }

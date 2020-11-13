@@ -23,7 +23,7 @@ class RegisterActivity : ActivityExtension() {
         ))
     }
 
-    fun onClick_register(v:View?){
+    fun onClick_register(@Suppress("UNUSED_PARAMETER") v:View?){
         if(!verifyInputs(register_email_tb, register_password_tb) { tb, isEmpty ->
                 var errorCode : String? = if(isEmpty) "empty" else null;
                 when(tb.id){
@@ -38,7 +38,7 @@ class RegisterActivity : ActivityExtension() {
         val email = register_email_tb.text;
         val pwd = register_password_tb.text;
 
-        if(User.getUser(email.toString()) == null) {
+        if(User.getUser(email.toString()) != null) {
             register_email_tb.error = Utils.getLangString(this, "tb_error_usedEmail")
             return
         }
@@ -49,7 +49,7 @@ class RegisterActivity : ActivityExtension() {
         switchActivity(ListActivity::class.java, null)
     }
 
-    fun onClick_cancel(v: View?){
+    fun onClick_cancel(@Suppress("UNUSED_PARAMETER") v: View?){
         switchActivity(MainActivity::class.java, null)
     }
 

@@ -17,7 +17,7 @@ class EntityViewModel<T>(app: Application, name: String) : AndroidViewModel(app)
         return EntityDatabase.getDatabase<T>(name).dao();
     }
 
-    fun query(query:String, vararg args:Object) : LiveData<List<T>> {
+    fun query(query:String, vararg args:Any) : LiveData<List<T>> {
         return (dao().rawQuery( if(args.isNotEmpty()) SimpleSQLiteQuery(query, args)
         else SimpleSQLiteQuery(query))) as LiveData<List<T>>;
     }

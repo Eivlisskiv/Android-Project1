@@ -21,19 +21,11 @@ class Session {
         fun connect(user:User){
             current_session = Session(user);
         }
-
-        fun anonymous(){
-            current_session = Session()
-        }
     }
 
-    var username:String = "";
+    var email:String = "";
 
     constructor(user: User){
-        username = user.username ?: "";
-    }
-
-    constructor(){
-        username = "Anon" + Random.nextInt(1000, 9999);
+        email = user.email ?: "";
     }
 }

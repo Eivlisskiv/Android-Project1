@@ -28,13 +28,13 @@ class MainActivity() : ActivityExtension() {
     fun login_button(v: View?){
 
         if(!verifyInputs(login_email_tb, login_password_tb) { tb, isEmpty ->
-                var errorCode : String? = null;
+                var errorCode : String? = if(isEmpty) "empty" else null;
                     when(tb.id){
-                        R.id.login_email_label -> {
-                            //if(Regex tb.Text is not email) errorCode = "notEmail";
+                        R.id.login_email_tb -> {
+                            if(errorCode == null && !Utils.stringMatch(tb.text.toString(), "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$")) errorCode = "notEmail";
                         }
                     }
-                if(isEmpty) "empty" else errorCode
+                errorCode
             }) return;
 
         if(Session.connect(

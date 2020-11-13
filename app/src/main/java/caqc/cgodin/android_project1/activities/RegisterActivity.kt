@@ -38,7 +38,7 @@ class RegisterActivity : ActivityExtension() {
         val email = register_email_tb.text;
         val pwd = register_password_tb.text;
 
-        if(User.getUser(email.toString()) == null) {
+        if(User.getUser(email.toString()) != null) {
             register_email_tb.error = Utils.getLangString(this, "tb_error_usedEmail")
             return
         }

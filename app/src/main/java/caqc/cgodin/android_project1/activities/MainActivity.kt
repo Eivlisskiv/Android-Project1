@@ -4,7 +4,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
+import androidx.appcompat.widget.Toolbar
 import caqc.cgodin.android_project1.R
 import caqc.cgodin.android_project1.Session
 import caqc.cgodin.android_project1.Utils
@@ -23,6 +26,14 @@ class MainActivity() : ActivityExtension() {
                 R.id.login_email_label, R.id.login_password_label,
                 R.id.login_login_button, R.id.login_register_button
         ))
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater : MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_toolbar, menu);
+        return true
     }
 
     fun login_button(v: View?){

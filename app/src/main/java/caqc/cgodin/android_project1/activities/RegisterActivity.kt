@@ -6,8 +6,10 @@ import android.util.Log
 import android.view.View
 import caqc.cgodin.android_project1.R
 import caqc.cgodin.android_project1.Session
+import caqc.cgodin.android_project1.Utils
 import caqc.cgodin.android_project1.sqlite.DatabaseHandler
 import caqc.cgodin.android_project1.sqlite.models.User
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlin.random.Random
 
@@ -22,10 +24,24 @@ class RegisterActivity : ActivityExtension() {
     }
 
     fun onClick_register(v:View?){
-        if(!verifyInputs(register_email_tb, register_password_tb)) return;
+        if(!verifyInputs(register_email_tb, register_password_tb) { tb, isEmpty ->
+                var errorCode : String? = if(isEmpty) "empty" else null;
+                when(tb.id){
+                    R.id.register_email_tb -> {
+                        if(errorCode == null && !Utils.stringMatch(tb.text.toString(), "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$")) errorCode = "notEmail";
+                    }
+                }
+                errorCode
+            }) return;
+
 
         val email = register_email_tb.text;
         val pwd = register_password_tb.text;
+
+        if(User.getUser(email.toString()) == null) {
+            register_email_tb.error = Utils.getLangString(this, "tb_error_usedEmail")
+            return
+        }
 
         val user = User(email.toString(), pwd.toString(), "User${Random.nextInt(1000, 9999)}")
         DatabaseHandler.database.insert(user);

@@ -9,6 +9,12 @@
     <string name="tbError_empty_fr">Entrée Vide</string>
     <string name="tbError_empty_en">Empty Field</string>
 
+    <string name="tbError_notEmail_fr">Pas une adresse email</string>
+    <string name="tbError_notEmail_en">Not an email adress</string>
+
+    <string name="tbError_usedEmail_fr">Cette adresse email est déjà utilisée</string>
+    <string name="tbError_usedEmail_en">This email adress is already used</string>
+
     <!-- /Errors -->
 
     <!-- View strings -->
@@ -32,7 +38,7 @@
     <string name="register_password_label_en">Password</string>
     <string name="register_password_label_fr">Mot de passe</string>
 
-    <string name="register_concel_button_en">Cancel</string>
+    <string name="register_cancel_button_en">Cancel</string>
     <string name="register_cancel_button_fr">Annuler</string>
 
     <string name="register_register_button_en">Confirm</string>

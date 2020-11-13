@@ -8,7 +8,7 @@ class User() : SqlEntity(User::class){
     companion object{
         fun getUser(email:String): User? {
             val users =
-                DatabaseHandler.database.query(User::class,"select * from user where email = \"$email\"");
+                DatabaseHandler.database.query(User::class,"select * from user where email = \"$email\"", null);
             return if(users.isNotEmpty()) users.first() else null;
         }
     }
@@ -16,7 +16,6 @@ class User() : SqlEntity(User::class){
     var email: String? = null
     var password: String? = null
     var username: String? = null
-    private var test: String = "Banana"
 
     constructor(email: String, password:String, username: String) : this(){
         this.email = email

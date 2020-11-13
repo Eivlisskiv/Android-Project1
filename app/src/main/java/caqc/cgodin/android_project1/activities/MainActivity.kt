@@ -14,6 +14,9 @@ import kotlinx.android.synthetic.main.activity_register.*
 class MainActivity() : ActivityExtension() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        if(Session.logged) switchActivity(ListActivity::class.java, null)
+
         super.onCreate(savedInstanceState)
         setContentView(
             R.layout.activity_main, arrayOf(
@@ -22,9 +25,9 @@ class MainActivity() : ActivityExtension() {
         ))
     }
 
-    fun login_button(view: View?){
+    fun login_button(v: View?){
 
-        if(verifyInputs(login_email_tb, login_password_tb) { tb, isEmpty ->
+        if(!verifyInputs(login_email_tb, login_password_tb) { tb, isEmpty ->
                 var errorCode : String? = null;
                     when(tb.id){
                         R.id.login_email_label -> {
@@ -37,7 +40,7 @@ class MainActivity() : ActivityExtension() {
         if(Session.connect(
                 login_email_tb.text.toString(),
                 login_password_tb.text.toString())){
-            switchActivity(this@MainActivity, RegisterActivity::class.java, null)
+            switchActivity(ListActivity::class.java, null)
         }
         else{
             Log.i("App","Login failed")
@@ -45,7 +48,7 @@ class MainActivity() : ActivityExtension() {
         }
     }
 
-    fun register(view: View?){
-        switchActivity(this@MainActivity, RegisterActivity::class.java, null)
+    fun register(v: View?){
+        switchActivity(RegisterActivity::class.java, null)
     }
 }

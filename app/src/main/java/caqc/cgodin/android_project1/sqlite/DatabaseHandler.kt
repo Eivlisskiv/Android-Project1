@@ -1,5 +1,6 @@
 package caqc.cgodin.android_project1.sqlite
 
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
@@ -67,15 +68,17 @@ class DatabaseHandler(name: String, vararg ttables: KClass<*>) : SQLiteOpenHelpe
         usingDB{ it.rawQuery(sqlQuery, null) }
     }
 
-    fun <T : SqlEntity> query(clazz: KClass<T>, sqlQuery: String): List<T>{
+    fun <T : SqlEntity> query(clazz: KClass<T>, sqlQuery: String, parser: ((T, Cursor) -> Unit)?): List<T>{
         return usingDB {
-            val cursor = it.rawQuery(sqlQuery, null);
+            val cursor: Cursor = it.rawQuery(sqlQuery, null);
             val entries : ArrayList<T> = arrayListOf()
             if(cursor.moveToFirst()){
                 cursor.moveToFirst()
-                while (!cursor.isAfterLast()){
+                while (!cursor.isAfterLast){
                     val v = clazz.createInstance()
-                    v.setWithCursor(clazz, cursor);
+                    if(parser == null) //Use default parser
+                        v.setWithCursor(clazz, cursor);
+                    else parser(v, cursor);
                     entries.add(v);
                     cursor.moveToNext()
                 }

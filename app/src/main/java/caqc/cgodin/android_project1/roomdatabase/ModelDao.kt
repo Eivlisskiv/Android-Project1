@@ -1,4 +1,4 @@
-package caqc.cgodin.android_project1.database
+package caqc.cgodin.android_project1.roomdatabase
 
 import androidx.lifecycle.LiveData
 import androidx.room.*

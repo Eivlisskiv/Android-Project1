@@ -21,24 +21,24 @@ class RegisterActivity : ActivityExtension() {
         ))
     }
 
-    fun onClick_register(view:View?){
+    fun onClick_register(v:View?){
+        if(!verifyInputs(register_email_tb, register_password_tb)) return;
+
         val email = register_email_tb.text;
         val pwd = register_password_tb.text;
-
-        if(verifyInputs(register_email_tb, register_password_tb)) return;
 
         val user = User(email.toString(), pwd.toString(), "User${Random.nextInt(1000, 9999)}")
         DatabaseHandler.database.insert(user);
         Session.connect(user);
-        switchActivity(this@RegisterActivity, ProfileActivity::class.java, null)
+        switchActivity(ListActivity::class.java, null)
     }
 
-    fun onClick_cancel(view: View?){
-        switchActivity(this@RegisterActivity, MainActivity::class.java, null)
+    fun onClick_cancel(v: View?){
+        switchActivity(MainActivity::class.java, null)
     }
 
     fun test(){
-        val users = DatabaseHandler.database.query( User::class,"select * from User")
+        val users = DatabaseHandler.database.query(User::class,"select * from User", null)
         Log.i("App", users.joinToString(separator = "\n") { "${it.username} ${it.email} ${it.password}" } )
     }
 }

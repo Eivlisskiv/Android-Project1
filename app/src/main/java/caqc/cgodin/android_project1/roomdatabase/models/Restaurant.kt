@@ -1,4 +1,4 @@
-package caqc.cgodin.android_project1.database.models
+package caqc.cgodin.android_project1.roomdatabase.models
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

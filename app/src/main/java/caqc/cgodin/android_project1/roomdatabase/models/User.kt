@@ -1,8 +1,7 @@
-package caqc.cgodin.android_project1.database.models
+package caqc.cgodin.android_project1.roomdatabase.models
 
-import android.database.Cursor
 import androidx.room.*
-import caqc.cgodin.android_project1.database.EntityDatabase
+import caqc.cgodin.android_project1.roomdatabase.EntityDatabase
 
 @Entity(tableName = "users")
 public class User(email: String, password:String, username: String) {

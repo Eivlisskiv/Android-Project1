@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "caqc.cgodin.android_project1"
-        minSdkVersion 14
+        minSdkVersion 30
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -36,6 +36,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.4.10"
+    implementation 'com.google.android.gms:play-services-maps:16.0.0'
 
     //Les composants Room
     implementation 'androidx.room:room-runtime:2.2.5'

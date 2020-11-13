@@ -8,6 +8,8 @@ class Session {
     companion object{
         var current_session: Session? = null
             private set
+        val logged: Boolean
+            get() = current_session != null
 
         fun connect(email:String, pwd: String): Boolean{
             val user = User.getUser(email);

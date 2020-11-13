@@ -32,5 +32,7 @@ class Utils {
         fun getFields(clazz: KClass<*>): List<KMutableProperty<*>> {
             return clazz.members.filterIsInstance<KMutableProperty<*>>() //{ it is KProperty<*> }
         }
+
+        fun stringMatch(string: String, sequence: String) : Boolean = Regex(sequence).matches(string);
     }
 }

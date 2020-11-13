@@ -1,4 +1,4 @@
-package caqc.cgodin.android_project1.database
+package caqc.cgodin.android_project1.roomdatabase
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

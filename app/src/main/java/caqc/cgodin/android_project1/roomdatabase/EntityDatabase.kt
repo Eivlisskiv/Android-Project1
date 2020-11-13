@@ -1,15 +1,12 @@
-package caqc.cgodin.android_project1.database
+package caqc.cgodin.android_project1.roomdatabase
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.sqlite.db.SimpleSQLiteQuery
-import androidx.sqlite.db.SupportSQLiteOpenHelper
 import caqc.cgodin.android_project1.AndroidProject1
-import caqc.cgodin.android_project1.database.models.Restaurant
-import caqc.cgodin.android_project1.database.models.User
-import java.util.*
+import caqc.cgodin.android_project1.roomdatabase.models.Restaurant
+import caqc.cgodin.android_project1.roomdatabase.models.User
 import kotlin.collections.HashMap
 
 @Database(entities = [User::class, Restaurant::class], version = 1, exportSchema = false)
@@ -23,7 +20,6 @@ abstract class EntityDatabase : RoomDatabase()  {
         var databases: HashMap<String, EntityDatabase> = HashMap();
 
         fun <T> getDatabase(key:String) : EntityDatabase {
-            Log.i("App", "database dict is null = ${databases == null}")
             return (databases[key] ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     AndroidProject1.context?.applicationContext

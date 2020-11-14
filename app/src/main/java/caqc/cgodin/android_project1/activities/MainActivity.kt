@@ -1,7 +1,5 @@
 package caqc.cgodin.android_project1.activities
 
-import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -12,7 +10,6 @@ import caqc.cgodin.android_project1.R
 import caqc.cgodin.android_project1.Session
 import caqc.cgodin.android_project1.Utils
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_register.*
 
 class MainActivity() : ActivityExtension() {
 
@@ -36,7 +33,7 @@ class MainActivity() : ActivityExtension() {
         return true
     }
 
-    fun login_button(v: View?){
+    fun login_button(@Suppress("UNUSED_PARAMETER") v: View?){
 
         if(!verifyInputs(login_email_tb, login_password_tb) { tb, isEmpty ->
                 var errorCode : String? = if(isEmpty) "empty" else null;
@@ -51,7 +48,7 @@ class MainActivity() : ActivityExtension() {
         if(Session.connect(
                 login_email_tb.text.toString(),
                 login_password_tb.text.toString())){
-            switchActivity(ListActivity::class.java, null)
+            switchActivity(ExploreActivity::class.java, null)
         }
         else{
             Log.i("App","Login failed")
@@ -59,7 +56,7 @@ class MainActivity() : ActivityExtension() {
         }
     }
 
-    fun register(v: View?){
+    fun register(@Suppress("UNUSED_PARAMETER") v: View?){
         switchActivity(RegisterActivity::class.java, null)
     }
 }

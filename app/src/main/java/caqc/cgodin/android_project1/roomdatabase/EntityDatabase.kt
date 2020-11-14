@@ -9,6 +9,7 @@ import caqc.cgodin.android_project1.roomdatabase.models.Restaurant
 import caqc.cgodin.android_project1.roomdatabase.models.User
 import kotlin.collections.HashMap
 
+@Suppress("UNCHECKED_CAST")
 @Database(entities = [User::class, Restaurant::class], version = 1, exportSchema = false)
 abstract class EntityDatabase : RoomDatabase()  {
 
@@ -33,9 +34,8 @@ abstract class EntityDatabase : RoomDatabase()  {
         }
     }
 
-    fun <T> getQuery(query:String, vararg args:Object) : LiveData<List<T>> {
-        return  (dao().rawQuery( if(args.isNotEmpty()) SimpleSQLiteQuery(query, args)
+    fun <T> getQuery(query:String, vararg args:Any) : LiveData<List<T>> {
+        return dao().rawQuery( if(args.isNotEmpty()) SimpleSQLiteQuery(query, args)
         else SimpleSQLiteQuery(query)) as LiveData<List<T>>
-                )
     }
 }

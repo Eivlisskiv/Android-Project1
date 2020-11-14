@@ -9,7 +9,7 @@ public class User(email: String, password:String, username: String) {
     companion object{
         fun getUser(email:String) : User? {
             val db = EntityDatabase.getDatabase<User>("User")
-            val result = db.getQuery<User>("select * from users where email = ?", email as Object);
+            val result = db.getQuery<User>("select * from users where email = ?", email);
             return result.value?.first()
         }
     }

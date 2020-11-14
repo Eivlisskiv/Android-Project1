@@ -43,6 +43,11 @@
 
     <string name="register_register_button_en">Confirm</string>
     <string name="register_register_button_fr">Confirmer</string>
+
+    <string name="explore_distance_label_en">Distance (Km)</string>
+    <string name="explore_distance_label_fr">Distance (Km)</string>
+
+
     <string name="title_activity_list">ScrollingActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"

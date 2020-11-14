@@ -37,7 +37,7 @@ class MainActivity() : ActivityExtension() {
         if(Session.connect(
                 login_email_tb.text.toString(),
                 login_password_tb.text.toString())){
-            switchActivity(Restaurant_Activity::class.java, null)
+            switchActivity(ExploreActivity::class.java, null)
         }
         else{
             Log.i("App","Login failed")

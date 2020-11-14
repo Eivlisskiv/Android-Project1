@@ -9,6 +9,7 @@ import caqc.cgodin.android_project1.roomdatabase.models.Restaurant
 import caqc.cgodin.android_project1.roomdatabase.models.User
 import kotlin.collections.HashMap
 
+@Suppress("UNCHECKED_CAST")
 @Database(entities = [User::class, Restaurant::class], version = 1, exportSchema = false)
 abstract class EntityDatabase : RoomDatabase()  {
 

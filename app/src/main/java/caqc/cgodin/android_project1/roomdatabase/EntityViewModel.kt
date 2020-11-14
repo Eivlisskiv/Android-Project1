@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
 
+@Suppress("UNCHECKED_CAST")
 class EntityViewModel<T>(app: Application, name: String) : AndroidViewModel(app) {
 
     val name = name;
@@ -18,7 +19,7 @@ class EntityViewModel<T>(app: Application, name: String) : AndroidViewModel(app)
     }
 
     fun query(query:String, vararg args:Any) : LiveData<List<T>> {
-        return (dao().rawQuery( if(args.isNotEmpty()) SimpleSQLiteQuery(query, args)
-        else SimpleSQLiteQuery(query))) as LiveData<List<T>>;
+        return dao().rawQuery( if(args.isNotEmpty()) SimpleSQLiteQuery(query, args)
+        else SimpleSQLiteQuery(query)) as LiveData<List<T>>;
     }
 }

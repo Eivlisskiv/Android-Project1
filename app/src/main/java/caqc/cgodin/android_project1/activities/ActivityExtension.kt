@@ -4,28 +4,56 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import caqc.cgodin.android_project1.R
 import caqc.cgodin.android_project1.Utils
 import org.w3c.dom.Text
 
-abstract class ActivityExtension : AppCompatActivity() {
+abstract class ActivityExtension(var toolbarId: Int? = null) : AppCompatActivity() {
 
-    var languageDependantViews: Array<Int>? = null;
+    var languageDependantViews: Array<Int>? = null
 
-    /*
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+
+    val hasToolbar = toolbarId != null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        super.onCreate(savedInstanceState)
+
     }
-    */
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        if(hasToolbar){
+            val inflater : MenuInflater = menuInflater
+            inflater.inflate(R.menu.menu_toolbar, menu)
+            return true
+        }
+        return false
+    }
+
+    fun setToolbar(){
+        if (hasToolbar){
+            val toolbar = findViewById<Toolbar>(toolbarId!!)
+            setSupportActionBar(toolbar)
+        }
+    }
 
     fun setContentView(layoutResID:Int, views: Array<Int>?){
         super.setContentView(layoutResID)
         if(views != null) languageDependantViews = views;
         updateViewLanguage()
+        setToolbar()
     }
 
     fun updateViewLanguage(){
@@ -58,12 +86,25 @@ abstract class ActivityExtension : AppCompatActivity() {
     fun verifyInputs(vararg inputs: EditText): Boolean =
         verifyInputs(*inputs, func = { _, isEmpty ->  if (isEmpty) "empty" else null })
 
-    fun <T : AppCompatActivity> switchActivity(clazz: Class<T>,
-                                               func: ((Intent) -> Intent)?): Intent{
+    fun <T : AppCompatActivity> switchActivity(clazz: Class<T>, func: ((Intent) -> Intent)?): Intent{
         val intent = Intent(this, clazz)
         if(func != null) func(intent);
         startActivity(intent)
         return intent;
     }
 
+    fun explore(item: MenuItem) =
+        toolbar_btnClick(ExploreActivity::class.java)
+
+
+    fun profile(item: MenuItem) =
+        toolbar_btnClick(ProfileActivity::class.java)
+
+    fun logout(item: MenuItem) =
+        toolbar_btnClick(MainActivity::class.java)
+
+    inline fun <reified T:ActivityExtension> toolbar_btnClick(clazz: Class<T>){
+        if(this is T) return
+        switchActivity(clazz, null)
+    }
 }

@@ -7,7 +7,7 @@
     tools:context=".activities.ProfileActivity">
 
     <include
-        android:id="@+id/toolbar"
+        android:id="@+id/profileToolbar"
         layout="@layout/toolbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

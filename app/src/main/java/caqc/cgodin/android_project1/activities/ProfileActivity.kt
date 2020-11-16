@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import caqc.cgodin.android_project1.R
 
-class ProfileActivity : AppCompatActivity() {
+class ProfileActivity : ActivityExtension(R.id.profileToolbar) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)

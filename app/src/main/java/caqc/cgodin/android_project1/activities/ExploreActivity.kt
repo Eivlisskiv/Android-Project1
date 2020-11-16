@@ -8,13 +8,14 @@ import android.widget.SeekBar
 import caqc.cgodin.android_project1.R
 import kotlinx.android.synthetic.main.activity_explore.*
 
-class ExploreActivity : ActivityExtension() {
+class ExploreActivity: ActivityExtension(R.id.exploreToolbar) {
 
     val distance: Int
         get() = explore_distance_bar?.progress ?: 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_explore, arrayOf(R.id.explore_distance_label))
     }
 

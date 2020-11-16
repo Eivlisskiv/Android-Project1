@@ -11,26 +11,18 @@ import caqc.cgodin.android_project1.Session
 import caqc.cgodin.android_project1.Utils
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity() : ActivityExtension() {
+class MainActivity() : ActivityExtension(R.id.mainToolbar) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         if(Session.logged) switchActivity(ListActivity::class.java, null)
-
         super.onCreate(savedInstanceState)
+
         setContentView(
             R.layout.activity_main, arrayOf(
                 R.id.login_email_label, R.id.login_password_label,
                 R.id.login_login_button, R.id.login_register_button
         ))
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater : MenuInflater = menuInflater
-        inflater.inflate(R.menu.menu_toolbar, menu);
-        return true
     }
 
     fun login_button(@Suppress("UNUSED_PARAMETER") v: View?){

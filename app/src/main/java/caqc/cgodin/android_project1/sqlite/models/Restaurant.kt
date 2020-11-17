@@ -22,6 +22,9 @@ class Restaurant() : SqlEntity(Restaurant::class) {
     var address: String? = null
     var b64Logo: String? = null
 
+    var latitude : Double? = null
+    var longitude: Double? = null
+
     constructor(name: String, address:String, b64Logo: String) : this(){
         this.name = name;
         this.address = address;

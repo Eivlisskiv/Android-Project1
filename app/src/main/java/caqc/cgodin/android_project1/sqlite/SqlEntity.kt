@@ -6,6 +6,7 @@ import android.util.Log
 import caqc.cgodin.android_project1.Utils
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
+import kotlin.reflect.jvm.jvmName
 
 
 open class  SqlEntity() {
@@ -62,8 +63,8 @@ open class  SqlEntity() {
         if(clazz == null) return null;
         val values = ContentValues()
         Utils.getFields(clazz!!).forEach{
-            val v = it.call(this) as String
-            Log.i("App", v)
+            val v = it.call(this)
+            Log.i("App", v as String)
             values.put(it.name, v)
         }
         return values;

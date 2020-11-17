@@ -5,7 +5,9 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import caqc.cgodin.android_project1.AndroidProject1
+import caqc.cgodin.android_project1.sqlite.models.Restaurant
 import caqc.cgodin.android_project1.sqlite.models.User
+import kotlin.math.log
 import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance
 import kotlin.reflect.full.isSubclassOf
@@ -19,36 +21,49 @@ class DatabaseHandler(name: String, vararg ttables: KClass<*>) : SQLiteOpenHelpe
 ) {
 
     companion object{
-        var database: DatabaseHandler = DatabaseHandler(
-            "ProjectDatabase",
-            User::class
-        )
-        private set;
+        var database: DatabaseHandler = initDataBase()
+        fun initDataBase(): DatabaseHandler {
+            val db = DatabaseHandler("ProjectDatabase",
+                User::class,
+                Restaurant::class)
+            db.upgrade()
+            return db
+        }
     }
 
     var tables = ttables;
 
     override fun onCreate(db: SQLiteDatabase?) {
         //Get and join classes' create table sql query
-        val query = tables.joinToString(separator = "\n") { it ->
+        Log.i("debug", "onCreate")
+        val query = tables.forEach { it ->
             //if is extends from SqlEntity
-            if (it.isSubclassOf(SqlEntity::class)) SqlEntity.toSqlTable(it)
-            else ""
+            if (it.isSubclassOf(SqlEntity::class)){
+                val query = SqlEntity.toSqlTable(it)
+                Log.i("Query", query)
+                db?.execSQL(query);
+            }
         }
-
-        Log.i("Query", query)
-
-        db?.execSQL(query);
-
         //Update values
         database = this
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        val query = tables.map { "drop table if exist ${it.simpleName}" }.joinToString(separator = "\n")
+        val query = tables.map { "drop table if exists ${it.simpleName}" }.joinToString(separator = "\n")
         Log.i("Query", query)
         db?.execSQL(query);
         onCreate(db);
+    }
+
+    fun upgrade(){
+        usingDB {db ->
+             tables.forEach {
+                val query = "DROP TABLE IF EXISTS ${it.simpleName}"
+                 Log.i("Query", query)
+                 db?.execSQL(query);
+             }
+            onCreate(db);
+        }
     }
 
     fun <T> usingDB(action: (db: SQLiteDatabase) -> T): T{

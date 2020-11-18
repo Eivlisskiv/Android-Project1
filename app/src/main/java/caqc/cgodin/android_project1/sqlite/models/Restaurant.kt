@@ -3,6 +3,7 @@ package caqc.cgodin.android_project1.sqlite.models
 import android.database.Cursor
 import caqc.cgodin.android_project1.sqlite.DatabaseHandler
 import caqc.cgodin.android_project1.sqlite.SqlEntity
+import org.json.JSONObject
 
 class Restaurant() : SqlEntity(Restaurant::class) {
 
@@ -49,6 +50,10 @@ class Restaurant() : SqlEntity(Restaurant::class) {
         this.b64Logo = cursor.getString(3)
         this.latitude = cursor.getString(4)//.toDouble()
         this.longitude = cursor.getString(5)//.toDouble()
+    }
+
+    constructor(json: JSONObject) : this(){
+
     }
 
 }

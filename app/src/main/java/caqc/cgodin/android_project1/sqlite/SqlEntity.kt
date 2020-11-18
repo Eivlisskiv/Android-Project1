@@ -15,7 +15,7 @@ open class  SqlEntity() {
         fun toSqlTable(clazz: KClass<*>?): String{
             if(clazz == null) return "";
             return """
-                CREATE TABLE ${clazz.simpleName} (
+                CREATE TABLE ${clazz.jvmName} (
                     ${fieldsToColumns(clazz).joinToString()}
                 );
             """.trimIndent()
@@ -63,8 +63,8 @@ open class  SqlEntity() {
         if(clazz == null) return null;
         val values = ContentValues()
         Utils.getFields(clazz!!).forEach{
-            val v = it.call(this)
-            Log.i("App", v as String)
+            val v = it.call(this).toString()
+            Log.i("App", v.toString())
             values.put(it.name, v)
         }
         return values;

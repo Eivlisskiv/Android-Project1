@@ -14,9 +14,7 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.fragment.app.Fragment
-import caqc.cgodin.android_project1.Config
-import caqc.cgodin.android_project1.R
-import caqc.cgodin.android_project1.Session
+import caqc.cgodin.android_project1.*
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -25,9 +23,15 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import org.json.JSONObject
 
 
 class MapsFragment : Fragment() {
+
+    companion object{
+        val placeQuery: GooglePlaceQuery = GooglePlaceQuery("", Session.location ?: Location(""), 10.0,
+            SearchType.Nearby, "name", "formatted_address", "icon", "geometry");
+    }
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -118,9 +122,17 @@ class MapsFragment : Fragment() {
             }
     }
 
-    fun googleMapQuery(query:String){
+    fun openGoogleMaps(query:String){
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(query))
         intent.setPackage("com.google.android.apps.maps")
         startActivity(intent)
+    }
+
+    fun googlePlacesQuery(distance: Double, callback: (JSONObject) -> Unit) {
+        placeQuery.location = Session.location ?: Location("");
+        placeQuery.inputParam = "type=restaurants"
+        placeQuery.distance = distance;
+
+        placeQuery.request(callback)
     }
 }

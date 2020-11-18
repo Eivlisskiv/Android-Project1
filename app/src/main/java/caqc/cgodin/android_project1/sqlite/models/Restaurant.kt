@@ -2,6 +2,7 @@ package caqc.cgodin.android_project1.sqlite.models
 
 import caqc.cgodin.android_project1.sqlite.DatabaseHandler
 import caqc.cgodin.android_project1.sqlite.SqlEntity
+import org.json.JSONObject
 
 class Restaurant() : SqlEntity(Restaurant::class) {
 
@@ -13,6 +14,8 @@ class Restaurant() : SqlEntity(Restaurant::class) {
                     res.name = cursor.getString(0);
                     res.address = cursor.getString(1);
                     res.b64Logo = cursor.getString(2);
+                    res.latitude = cursor.getDouble(3)
+                    res.longitude = cursor.getDouble(4)
                 };
             return if(restaurants.isNotEmpty()) restaurants.first() else null;
         }
@@ -29,5 +32,9 @@ class Restaurant() : SqlEntity(Restaurant::class) {
         this.name = name;
         this.address = address;
         this.b64Logo = b64Logo;
+    }
+
+    constructor(json: JSONObject) : this(){
+
     }
 }

@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import caqc.cgodin.android_project1.AndroidProject1
+import caqc.cgodin.android_project1.sqlite.models.Restaurant
 import caqc.cgodin.android_project1.sqlite.models.User
 import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance
@@ -21,7 +22,7 @@ class DatabaseHandler(name: String, vararg ttables: KClass<*>) : SQLiteOpenHelpe
     companion object{
         var database: DatabaseHandler = DatabaseHandler(
             "ProjectDatabase",
-            User::class
+            User::class, Restaurant::class,
         )
         private set;
     }
@@ -49,6 +50,15 @@ class DatabaseHandler(name: String, vararg ttables: KClass<*>) : SQLiteOpenHelpe
         Log.i("Query", query)
         db?.execSQL(query);
         onCreate(db);
+    }
+
+    fun upgrade(){
+        usingDB {
+            val query = tables.map { "drop table if exist ${it.simpleName}" }.joinToString(separator = "\n")
+            Log.i("Query", query)
+            it.execSQL(query);
+            onCreate(it);
+        }
     }
 
     fun <T> usingDB(action: (db: SQLiteDatabase) -> T): T{

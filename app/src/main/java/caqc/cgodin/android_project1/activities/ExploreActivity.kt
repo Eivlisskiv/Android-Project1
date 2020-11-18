@@ -1,21 +1,19 @@
 package caqc.cgodin.android_project1.activities
 
-import android.content.Intent
 import android.location.Location
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import caqc.cgodin.android_project1.R
 import caqc.cgodin.android_project1.Session
+import caqc.cgodin.android_project1.sqlite.models.Restaurant
 import caqc.cgodin.android_project1.ui.main.MapsFragment
-import com.google.android.gms.maps.MapFragment
 import kotlinx.android.synthetic.main.activity_explore.*
+import org.json.JSONObject
 import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance
 
@@ -77,9 +75,6 @@ class ExploreActivity : ActivityExtension() {
     fun searchResto(from: Location, distance: Int): String = "geo:${from.latitude},${from.longitude}?z=${distance}q=restaurants";
 
     fun test(v: View?){
-        mapFrag.googleMapQuery(
-            searchResto(Session.location ?: Location(""), distance)
-        )
+        mapFrag.googlePlacesQuery(distance + 0.00) { Session.parseJsonResult(it); }
     }
-
 }

@@ -3,20 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:title="logout"
-        android:icon="@drawable/ic_logout"
         android:id="@+id/logout"
-        app:showAsAction="ifRoom"/>
+        android:icon="@drawable/ic_logout"
+        android:onClick="logout"
+        android:title="logout"
+        app:showAsAction="ifRoom" />
 
     <item
-        android:title="explore"
-        android:icon="@drawable/ic_explorer"
         android:id="@+id/explore"
-        app:showAsAction="always"/>
+        android:icon="@drawable/ic_explorer"
+        android:onClick="explore"
+        android:title="explore"
+        app:showAsAction="always" />
 
     <item
-        android:title="profile"
-        android:icon="@drawable/ic_profile"
         android:id="@+id/profile"
-        app:showAsAction="always"/>
+        android:icon="@drawable/ic_profile"
+        android:onClick="profile"
+        android:title="profile"
+        app:showAsAction="always" />
 </menu>

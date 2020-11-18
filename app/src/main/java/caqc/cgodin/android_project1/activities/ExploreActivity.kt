@@ -17,7 +17,7 @@ import org.json.JSONObject
 import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance
 
-class ExploreActivity : ActivityExtension() {
+class ExploreActivity: ActivityExtension(R.id.exploreToolbar) {
 
     lateinit var mapFrag: MapsFragment;
 

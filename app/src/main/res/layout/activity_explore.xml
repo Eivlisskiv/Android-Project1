@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ExploreActivity">
+    tools:context=".activities.ExploreActivity"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <include
+        android:id="@+id/exploreToolbar"
+        layout="@layout/toolbar" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -75,6 +75,14 @@
 
             </LinearLayout>
 
+            <Button
+                android:id="@+id/explore_search_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:onClick="test"
+                android:text="Button" />
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -82,12 +90,10 @@
 
         </LinearLayout>
 
-        <fragment
+        <FrameLayout
             android:id="@+id/explore_map_frag"
-            android:name="caqc.cgodin.android_project1.ui.main.MapsFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="3" />
-    </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

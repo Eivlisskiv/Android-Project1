@@ -6,6 +6,7 @@ import android.util.Log
 import caqc.cgodin.android_project1.Utils
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
+import kotlin.reflect.jvm.jvmName
 
 
 open class  SqlEntity() {
@@ -25,8 +26,11 @@ open class  SqlEntity() {
         }
 
         fun fieldTypeToColumn(type: KType) : String{
-            return when(type.toString()){
-                "Int" -> "number"
+            var t = type.toString()
+            t = t.substring(t.indexOf('.') + 1).trimEnd('?')
+            return when(t){
+                "Int", "Double",
+                    -> "number"
                 else -> "varchar(255)"
             }
         }
@@ -62,8 +66,8 @@ open class  SqlEntity() {
         if(clazz == null) return null;
         val values = ContentValues()
         Utils.getFields(clazz!!).forEach{
-            val v = it.call(this) as String
-            Log.i("App", v)
+            val v = it.call(this).toString()
+            Log.i("App", v.toString())
             values.put(it.name, v)
         }
         return values;

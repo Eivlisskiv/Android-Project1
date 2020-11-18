@@ -29,16 +29,16 @@ class Restaurant() : SqlEntity(Restaurant::class) {
 
     var email: String? = null
     var name: String? = null
-    var address: String? = null
-    var b64Logo: String? = null
-    var latitude: String? = null
-    var longitude: String? = null
+    var id: String? = null
+    var logoUrl: String? = null
+    var latitude: Double? = null
+    var longitude: Double? = null
 
-    constructor(email: String, name: String, address:String, b64Logo: String, latitude: String, longitude: String) : this(){
+    constructor(email: String, name: String, id:String, logoUrl: String, latitude: Double, longitude: Double) : this(){
         this.email = email
         this.name = name
-        this.address = address
-        this.b64Logo = b64Logo
+        this.id = id
+        this.logoUrl = logoUrl
         this.latitude = latitude
         this.longitude = longitude
     }
@@ -46,14 +46,19 @@ class Restaurant() : SqlEntity(Restaurant::class) {
     fun asignCursorData(cursor: Cursor){
         this.email = cursor.getString(0)
         this.name = cursor.getString(1)
-        this.address = cursor.getString(2)
-        this.b64Logo = cursor.getString(3)
-        this.latitude = cursor.getString(4)//.toDouble()
-        this.longitude = cursor.getString(5)//.toDouble()
+        this.id = cursor.getString(2)
+        this.logoUrl = cursor.getString(3)
+        this.latitude = cursor.getDouble(4)
+        this.longitude = cursor.getDouble(5)
     }
 
     constructor(json: JSONObject) : this(){
-
+        this.name = json.getString("name")
+        this.id = json.getString("place_id")
+        this.logoUrl = json.getString("icon")
+        val location = json.getJSONObject("geometry").getJSONObject("location")
+        this.latitude = location.getDouble("lat")
+        this.longitude = location.getDouble("lng")
     }
 
 }

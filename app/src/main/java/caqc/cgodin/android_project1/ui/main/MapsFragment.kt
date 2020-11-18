@@ -7,14 +7,17 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.fragment.app.Fragment
-import caqc.cgodin.android_project1.*
+import caqc.cgodin.android_project1.GooglePlaceQuery
+import caqc.cgodin.android_project1.R
+import caqc.cgodin.android_project1.SearchType
+import caqc.cgodin.android_project1.Session
+import caqc.cgodin.android_project1.sqlite.models.Restaurant
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -29,8 +32,10 @@ import org.json.JSONObject
 class MapsFragment : Fragment() {
 
     companion object{
-        val placeQuery: GooglePlaceQuery = GooglePlaceQuery("", Session.location ?: Location(""), 10.0,
-            SearchType.Nearby, "name", "formatted_address", "icon", "geometry");
+        val placeQuery: GooglePlaceQuery = GooglePlaceQuery(
+            "", Session.location ?: Location(""), 10.0,
+            SearchType.Nearby, "name", "formatted_address", "icon", "geometry"
+        );
     }
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -62,11 +67,12 @@ class MapsFragment : Fragment() {
         mapUI.isCompassEnabled = true;
     }
 
-    fun mapMarker(location: Location?, name: String = "Marker"){
+    fun mapMarker(location: Location?, name: String = "Marker", moveCam: Boolean = true){
         if(map == null || location == null) return;
         val marker = LatLng(location.latitude, location.longitude)
         map!!.addMarker(MarkerOptions().position(marker).title(name))
-        map!!.moveCamera(CameraUpdateFactory.newLatLng(marker))
+        if(moveCam)
+            map!!.moveCamera(CameraUpdateFactory.newLatLng(marker))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,11 +81,18 @@ class MapsFragment : Fragment() {
 
         if (ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_COARSE_LOCATION)
+            ActivityCompat.checkSelfPermission(
+                context!!,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
             != PackageManager.PERMISSION_GRANTED) {
 
-            requestPermissions(arrayOf( Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION ), REQUEST_CODE)
+            requestPermissions(
+                arrayOf(
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ), REQUEST_CODE
+            )
         }
         else setLocationClient();
     }
@@ -92,14 +105,16 @@ class MapsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_maps, container, false)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int,
-        permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>, grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         when(requestCode){
             REQUEST_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                setLocationClient();
+                    setLocationClient();
             }
         }
     }
@@ -116,13 +131,16 @@ class MapsFragment : Fragment() {
             .addOnSuccessListener { location: Location? ->
                 if(location != null){
                     Session.location = location
-                    map!!.moveCamera(CameraUpdateFactory.newLatLng(
-                        LatLng(location.latitude, location.longitude)))
+                    map!!.moveCamera(
+                        CameraUpdateFactory.newLatLng(
+                            LatLng(location.latitude, location.longitude)
+                        )
+                    )
                 }
             }
     }
 
-    fun openGoogleMaps(query:String){
+    fun openGoogleMaps(query: String){
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(query))
         intent.setPackage("com.google.android.apps.maps")
         startActivity(intent)
@@ -134,5 +152,21 @@ class MapsFragment : Fragment() {
         placeQuery.distance = distance;
 
         placeQuery.request(callback)
+
+        refreshMarkers()
+    }
+
+    fun refreshMarkers(){
+        val handler = Handler()
+        handler.postDelayed(
+            Runnable {
+                map?.clear()
+                for(resto in Session.searchResult){
+                    val marker = LatLng(resto.latitude ?: 0.0, resto.longitude ?: 0.0)
+                    map?.addMarker(MarkerOptions().position(marker).title(resto.name))
+                }
+            },
+            2000
+        )
     }
 }

@@ -29,17 +29,9 @@ import org.w3c.dom.Text
 abstract class ActivityExtension(var toolbarId: Int? = null) : AppCompatActivity() {
 
     var languageDependantViews: Array<Int>? = null
-
-
     val hasToolbar = toolbarId != null
 
     lateinit var restaurantAdapter: RestaurantRecyclerAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         if(hasToolbar){
@@ -121,7 +113,6 @@ abstract class ActivityExtension(var toolbarId: Int? = null) : AppCompatActivity
 
     fun explore(item: MenuItem) =
         toolbar_btnClick(ExploreActivity::class.java)
-
 
     fun profile(item: MenuItem) =
         toolbar_btnClick(ProfileActivity::class.java)

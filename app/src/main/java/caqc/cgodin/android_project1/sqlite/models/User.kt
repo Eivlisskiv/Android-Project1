@@ -8,7 +8,7 @@ class User() : SqlEntity(User::class){
     companion object{
         fun getUser(email:String): User? {
             val users =
-                DatabaseHandler.database.query(User::class,"select * from user where email = \"$email\"", null);
+                DatabaseHandler.database.query(User::class,"select * from User where email = \"$email\"", null);
             return if(users.isNotEmpty()) users.first() else null;
         }
     }

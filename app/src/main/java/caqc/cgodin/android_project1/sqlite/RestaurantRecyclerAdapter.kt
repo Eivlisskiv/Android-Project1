@@ -39,7 +39,7 @@ class RestaurantRecyclerAdapter  : RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         fun bind(restaurant: Restaurant){
             restaurantName.setText(restaurant.name)
-            restaurantAdress.setText(restaurant.address)
+            restaurantAdress.setText(restaurant.id)
 
             val requestOptions = RequestOptions()
                 .placeholder(R.drawable.ic_launcher_background)
@@ -47,7 +47,7 @@ class RestaurantRecyclerAdapter  : RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             Glide.with(itemView.context)
                 .applyDefaultRequestOptions(requestOptions)
-                .load(restaurant.b64Logo)
+                .load(restaurant.logoUrl)
                 .into(restaurantLogo)
         }
     }

@@ -15,7 +15,7 @@ open class  SqlEntity() {
         fun toSqlTable(clazz: KClass<*>?): String{
             if(clazz == null) return "";
             return """
-                CREATE TABLE ${clazz.jvmName} (
+                CREATE TABLE ${clazz.simpleName} (
                     ${fieldsToColumns(clazz).joinToString()}
                 );
             """.trimIndent()
@@ -26,8 +26,11 @@ open class  SqlEntity() {
         }
 
         fun fieldTypeToColumn(type: KType) : String{
-            return when(type.toString()){
-                "Int" -> "number"
+            var t = type.toString()
+            t = t.substring(t.indexOf('.') + 1).trimEnd('?')
+            return when(t){
+                "Int", "Double",
+                    -> "number"
                 else -> "varchar(255)"
             }
         }

@@ -49,9 +49,11 @@ class DatabaseHandler(name: String, vararg ttables: KClass<*>) : SQLiteOpenHelpe
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        val query = tables.map { "drop table if exists ${it.simpleName}" }.joinToString(separator = "\n")
-        Log.i("Query", query)
-        db?.execSQL(query);
+        tables.forEach {
+            val query = "DROP TABLE IF EXISTS ${it.simpleName}"
+            Log.i("Query", query)
+            db?.execSQL(query);
+        }
         onCreate(db);
     }
 
@@ -60,7 +62,7 @@ class DatabaseHandler(name: String, vararg ttables: KClass<*>) : SQLiteOpenHelpe
              tables.forEach {
                 val query = "DROP TABLE IF EXISTS ${it.simpleName}"
                  Log.i("Query", query)
-                 db?.execSQL(query);
+                 db.execSQL(query);
              }
             onCreate(db);
         }

@@ -78,6 +78,7 @@ class ExploreActivity: ActivityExtension(R.id.exploreToolbar) {
     fun searchResto(from: Location, distance: Int): String = "geo:${from.latitude},${from.longitude}?z=${distance}q=restaurants";
 
     fun test(v: View?){
+        mapFrag.clear()
         mapFrag.googlePlacesQuery(listFrag,distance + 0.00) { Session.parseJsonResult(it); }
     }
 }

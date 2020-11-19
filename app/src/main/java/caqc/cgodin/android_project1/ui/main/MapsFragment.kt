@@ -8,6 +8,7 @@ import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +35,7 @@ class MapsFragment : Fragment() {
 
     companion object{
         val placeQuery: GooglePlaceQuery = GooglePlaceQuery(
-            "", Session.location ?: Location(""), 10.0,
+            "type=restaurant", Session.location ?: Location(""), 10.0,
             SearchType.Nearby, "name", "formatted_address", "icon", "geometry"
         );
     }
@@ -44,6 +45,7 @@ class MapsFragment : Fragment() {
     private var REQUEST_CODE = 1;
 
     private var map: GoogleMap? = null;
+    fun clear()  = map?.clear()
     private val callback = OnMapReadyCallback { googleMap ->
         /**
          * Manipulates the map once available.
@@ -132,7 +134,7 @@ class MapsFragment : Fragment() {
             .addOnSuccessListener { location: Location? ->
                 if(location != null){
                     Session.location = location
-                    map!!.moveCamera(
+                    map?.moveCamera(
                         CameraUpdateFactory.newLatLng(
                             LatLng(location.latitude, location.longitude)
                         )
@@ -149,8 +151,7 @@ class MapsFragment : Fragment() {
 
     fun googlePlacesQuery(recyclerView: RestaurantListFragment, distance: Double, callback: (JSONObject) -> Unit) {
         placeQuery.location = Session.location ?: Location("");
-        placeQuery.inputParam = "type=restaurants"
-        placeQuery.distance = distance;
+        placeQuery.distance = distance * 1000;
 
         placeQuery.request(callback)
 
@@ -164,11 +165,12 @@ class MapsFragment : Fragment() {
                 recyclerView.restaurantAdapter.submitList(Session.searchResult)
                 map?.clear()
                 for(resto in Session.searchResult){
+                    Log.i("Resto", "${resto.name}: ${resto.latitude ?: 0.0}, ${resto.longitude ?: 0.0}")
                     val marker = LatLng(resto.latitude ?: 0.0, resto.longitude ?: 0.0)
                     map?.addMarker(MarkerOptions().position(marker).title(resto.name))
                 }
             },
-            2000
+            3000
         )
     }
 }

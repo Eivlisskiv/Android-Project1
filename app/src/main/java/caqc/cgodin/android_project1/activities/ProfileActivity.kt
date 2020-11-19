@@ -10,7 +10,5 @@ class ProfileActivity : ActivityExtension(R.id.profileToolbar) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
-        initRecyclerView(this)
-        addDataSet()
     }
 }

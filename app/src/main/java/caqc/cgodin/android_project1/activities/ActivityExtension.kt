@@ -24,6 +24,7 @@ import caqc.cgodin.android_project1.sqlite.RestaurantRecyclerAdapter
 import caqc.cgodin.android_project1.sqlite.TopSpacingItemDecoration
 import caqc.cgodin.android_project1.sqlite.models.Restaurant
 import kotlinx.android.synthetic.main.activity_profile.*
+import kotlinx.android.synthetic.main.fragment_restaurant_list.*
 import org.w3c.dom.Text
 
 abstract class ActivityExtension(var toolbarId: Int? = null) : AppCompatActivity() {
@@ -31,7 +32,6 @@ abstract class ActivityExtension(var toolbarId: Int? = null) : AppCompatActivity
     var languageDependantViews: Array<Int>? = null
     val hasToolbar = toolbarId != null
 
-    lateinit var restaurantAdapter: RestaurantRecyclerAdapter
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         if(hasToolbar){
@@ -43,22 +43,6 @@ abstract class ActivityExtension(var toolbarId: Int? = null) : AppCompatActivity
 
     }
 
-    fun addDataSet(){
-        val data = Restaurant.getRestaurant()
-        if (data != null) {
-            restaurantAdapter.submitList(data)
-        }
-    }
-
-    fun initRecyclerView(context: Context){
-        restaurant_recyclerview.apply {
-            layoutManager = LinearLayoutManager(context)
-            val topSpacingDecoration = TopSpacingItemDecoration(30)
-            addItemDecoration(topSpacingDecoration)
-            restaurantAdapter = RestaurantRecyclerAdapter()
-            adapter = restaurantAdapter
-        }
-    }
 
     fun setToolbar(){
         if (hasToolbar){

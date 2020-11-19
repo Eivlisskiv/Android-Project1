@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import caqc.cgodin.android_project1.GooglePlaceQuery
 import caqc.cgodin.android_project1.R
 import caqc.cgodin.android_project1.SearchType
@@ -146,20 +147,21 @@ class MapsFragment : Fragment() {
         startActivity(intent)
     }
 
-    fun googlePlacesQuery(distance: Double, callback: (JSONObject) -> Unit) {
+    fun googlePlacesQuery(recyclerView: RestaurantListFragment, distance: Double, callback: (JSONObject) -> Unit) {
         placeQuery.location = Session.location ?: Location("");
         placeQuery.inputParam = "type=restaurants"
         placeQuery.distance = distance;
 
         placeQuery.request(callback)
 
-        refreshMarkers()
+        refreshMarkers(recyclerView)
     }
 
-    fun refreshMarkers(){
+    fun refreshMarkers(recyclerView: RestaurantListFragment){
         val handler = Handler()
         handler.postDelayed(
             Runnable {
+                recyclerView.restaurantAdapter.submitList(Session.searchResult)
                 map?.clear()
                 for(resto in Session.searchResult){
                     val marker = LatLng(resto.latitude ?: 0.0, resto.longitude ?: 0.0)

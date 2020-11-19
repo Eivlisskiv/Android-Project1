@@ -12,6 +12,7 @@ import caqc.cgodin.android_project1.R
 import caqc.cgodin.android_project1.Session
 import caqc.cgodin.android_project1.sqlite.models.Restaurant
 import caqc.cgodin.android_project1.ui.main.MapsFragment
+import caqc.cgodin.android_project1.ui.main.RestaurantListFragment
 import kotlinx.android.synthetic.main.activity_explore.*
 import org.json.JSONObject
 import kotlin.reflect.KClass
@@ -20,6 +21,7 @@ import kotlin.reflect.full.createInstance
 class ExploreActivity: ActivityExtension(R.id.exploreToolbar) {
 
     lateinit var mapFrag: MapsFragment;
+    lateinit var listFrag: RestaurantListFragment
 
     val distance: Int
         get() = explore_distance_bar?.progress ?: 0
@@ -29,6 +31,7 @@ class ExploreActivity: ActivityExtension(R.id.exploreToolbar) {
         setContentView(R.layout.activity_explore, arrayOf(R.id.explore_distance_label, R.id.explore_search_button))
 
         mapFrag = setFragment(MapsFragment::class, R.id.explore_map_frag)
+        listFrag = setFragment(RestaurantListFragment::class, R.id.explore_list_frag)
     }
 
     override fun onStart() {
@@ -75,6 +78,6 @@ class ExploreActivity: ActivityExtension(R.id.exploreToolbar) {
     fun searchResto(from: Location, distance: Int): String = "geo:${from.latitude},${from.longitude}?z=${distance}q=restaurants";
 
     fun test(v: View?){
-        mapFrag.googlePlacesQuery(distance + 0.00) { Session.parseJsonResult(it); }
+        mapFrag.googlePlacesQuery(listFrag,distance + 0.00) { Session.parseJsonResult(it); }
     }
 }

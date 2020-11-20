@@ -10,7 +10,7 @@ import caqc.cgodin.android_project1.Session
 import caqc.cgodin.android_project1.sqlite.models.Restaurant
 import caqc.cgodin.android_project1.ui.main.MapsFragment
 
-class RestoActivity : ActivityExtension(R.id.restoToolbar) {
+class RestoActivity : ActivityExtension(R.id.RestoToolbar) {
 
     lateinit var mapFrag: MapsFragment;
     lateinit var resto: Restaurant;

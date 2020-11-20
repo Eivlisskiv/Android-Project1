@@ -4,25 +4,23 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import caqc.cgodin.android_project1.R
 import caqc.cgodin.android_project1.sqlite.models.Restaurant
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import kotlinx.android.synthetic.main.restaurant_recycler_view.view.*
-import kotlin.collections.ArrayList
 
-class RestaurantRecyclerAdapter  : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class RestaurantRecyclerAdapter  : RecyclerView.Adapter<RestaurantRecyclerAdapter.RestaurantViewHolder>(){
 
     private var items: List<Restaurant> = ArrayList()
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return RestaurantViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.activity_profile, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantViewHolder {
+        return RestaurantViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.restaurant_recycler_view, parent, false))
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when(holder){
-            is RestaurantViewHolder -> holder.bind(items.get(position))
-        }
+    override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
+        holder.bind(items[position])
     }
 
     override fun getItemCount(): Int {
@@ -37,12 +35,14 @@ class RestaurantRecyclerAdapter  : RecyclerView.Adapter<RecyclerView.ViewHolder>
         items = restaurantList
     }
 
-    class RestaurantViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val restaurantLogo = itemView.restaurant_logo
-        val restaurantName = itemView.restaurant_name
-        val restaurantAdress = itemView.restaurant_adress
+    class RestaurantViewHolder(val itemView: View) : RecyclerView.ViewHolder(itemView){
+
 
         fun bind(restaurant: Restaurant){
+            val restaurantLogo = itemView.findViewById<ImageView>(R.id.restaurant_logo)
+            val restaurantName = itemView.findViewById<TextView>(R.id.restaurant_name)
+            val restaurantAdress = itemView.findViewById<TextView>(R.id.restaurant_adress)
+
             restaurantName.text = restaurant.name
             restaurantAdress.text = restaurant.id
 
@@ -56,5 +56,7 @@ class RestaurantRecyclerAdapter  : RecyclerView.Adapter<RecyclerView.ViewHolder>
                 .into(restaurantLogo)
         }
     }
+
+
 
 }

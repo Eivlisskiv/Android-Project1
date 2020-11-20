@@ -9,12 +9,17 @@ import android.widget.ImageButton
 import caqc.cgodin.android_project1.R
 import caqc.cgodin.android_project1.Session
 import caqc.cgodin.android_project1.Utils
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.security.auth.callback.Callback
 
 
 class MainActivity() : ActivityExtension(R.id.mainToolbar) {

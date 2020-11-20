@@ -19,10 +19,6 @@ class RestaurantListFragment : Fragment() {
     lateinit var restaurantAdapter: RestaurantRecyclerAdapter
     lateinit var activityParent: ActivityExtension
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,4 +48,6 @@ class RestaurantListFragment : Fragment() {
             adapter = restaurantAdapter
         }
     }
+
+    fun submitList(items: ArrayList<Restaurant>) = restaurantAdapter.submitList(items)
 }

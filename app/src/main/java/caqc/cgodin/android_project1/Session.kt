@@ -5,6 +5,7 @@ import android.util.Log
 import caqc.cgodin.android_project1.sqlite.DatabaseHandler
 import caqc.cgodin.android_project1.sqlite.models.Restaurant
 import caqc.cgodin.android_project1.sqlite.models.User
+import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
@@ -38,6 +39,10 @@ class Session {
             current_session = Session(account)
         }
 
+        fun connect(result: LoginResult){
+            current_session = Session(result)
+        }
+
         fun logout() {
             current_session = null;
         }
@@ -67,6 +72,10 @@ class Session {
 
     constructor(account: GoogleSignInAccount){
         email = account.email;
+    }
+
+    constructor(result: LoginResult){
+        email = result.accessToken.userId;
     }
 
     constructor(){
@@ -114,4 +123,6 @@ class Session {
 
         return location
     }
+
+    fun getFavorited(): List<Restaurant>? = if (email != null) Restaurant.queryMany("select * from restaurant where email = \"$email\"") else null;
 }

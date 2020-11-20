@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardElevation="10dp"
-    app:cardCornerRadius="4dp"
-    app:cardPreventCornerOverlap="false"
-    tools:context=".activities.ProfileActivity">
+    android:layout_height="match_parent"
+    tools:context=".activities.ExploreActivity"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/profileToolbar"
         layout="@layout/toolbar" />
 
+    <FrameLayout
+        android:id="@+id/profile_list_frag"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5" />
 
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

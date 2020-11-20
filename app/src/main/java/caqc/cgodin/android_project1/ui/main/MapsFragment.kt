@@ -19,6 +19,7 @@ import caqc.cgodin.android_project1.GooglePlaceQuery
 import caqc.cgodin.android_project1.R
 import caqc.cgodin.android_project1.SearchType
 import caqc.cgodin.android_project1.Session
+import caqc.cgodin.android_project1.sqlite.RestaurantRecyclerAdapter
 import caqc.cgodin.android_project1.sqlite.models.Restaurant
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices

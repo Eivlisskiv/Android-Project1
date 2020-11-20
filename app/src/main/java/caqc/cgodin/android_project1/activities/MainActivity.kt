@@ -9,18 +9,26 @@ import android.widget.ImageButton
 import caqc.cgodin.android_project1.R
 import caqc.cgodin.android_project1.Session
 import caqc.cgodin.android_project1.Utils
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
+import com.facebook.login.widget.LoginButton
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 
 class MainActivity() : ActivityExtension(R.id.mainToolbar) {
 
     val GOOGLE_SIGN_IN = 101;
-    val FACEBOOK_SIGN_IN = 202;
+    val FACEBOOK_LOGIN = 202
+    val facebookCallBack = CallbackManager.Factory.create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -33,8 +41,7 @@ class MainActivity() : ActivityExtension(R.id.mainToolbar) {
                 R.id.login_login_button, R.id.login_register_button
             )
         )
-
-        Utils.setGlideImage(this, R.id.login_facebook_btn, "https://insidesmallbusiness.com.au/wp-content/uploads/2014/07/facebook-logo.jpg")
+        initFacebook()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -50,8 +57,13 @@ class MainActivity() : ActivityExtension(R.id.mainToolbar) {
                 GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInResult(task)
         }
+        else {
+            facebookCallBack.onActivityResult(requestCode, resultCode, data)
+        }
 
     }
+
+
 
     fun login_button(@Suppress("UNUSED_PARAMETER") v: View?){
 
@@ -92,6 +104,26 @@ class MainActivity() : ActivityExtension(R.id.mainToolbar) {
         val signInIntent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent, GOOGLE_SIGN_IN)
 
+    }
+
+    fun initFacebook(){
+        val fbButton = findViewById<LoginButton>(R.id.login_facebook_btn)
+        fbButton.setReadPermissions("email")
+        fbButton.registerCallback(facebookCallBack, object:
+            FacebookCallback<LoginResult> {
+            override fun onSuccess(result: LoginResult?) {
+                if(result != null) Session.connect(result);
+                switchActivity(ExploreActivity::class)
+            }
+
+            override fun onCancel() {
+                Log.i("FACEBOOK LOGIN", "Dans onCancel")
+            }
+
+            override fun onError(error: FacebookException?) {
+                Log.i("FACEBOOK LOGIN", "Dans onError")
+            }
+        })
     }
 
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {

@@ -19,11 +19,4 @@ class ProfileActivity : ActivityExtension(R.id.profileToolbar) {
         setContentView(R.layout.activity_profile)
         listFrag = setFragment(RestaurantListFragment::class, R.id.profile_list_frag)
     }
-
-    fun <T : Fragment> setFragment(clazz: KClass<T>, id: Int) : T {
-        val instance = clazz.createInstance();
-        supportFragmentManager.beginTransaction()
-            .replace(id, instance).commit()
-        return instance;
-    }
 }

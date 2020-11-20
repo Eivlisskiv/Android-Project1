@@ -79,6 +79,12 @@ class MapsFragment : Fragment() {
             map!!.moveCamera(CameraUpdateFactory.newLatLng(marker))
     }
 
+    fun zoomTo(latitude: Double?, longitude: Double?) {
+        val marker = LatLng(latitude ?: 0.0, longitude ?: 0.0)
+        //map!!.moveCamera(CameraUpdateFactory.newLatLng(marker))
+        map!!.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 16F))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fusedLocationClient = context?.let { LocationServices.getFusedLocationProviderClient(it) }!!
@@ -171,7 +177,9 @@ class MapsFragment : Fragment() {
                     map?.addMarker(MarkerOptions().position(marker).title(resto.name))
                 }
             },
-            3000
+            1000
         )
     }
+
+
 }

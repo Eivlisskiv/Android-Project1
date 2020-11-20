@@ -2,9 +2,13 @@ package caqc.cgodin.android_project1
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
+import caqc.cgodin.android_project1.activities.ActivityExtension
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import java.util.*
 import kotlin.reflect.KCallable
 import kotlin.reflect.KClass
@@ -34,5 +38,18 @@ class Utils {
         }
 
         fun stringMatch(string: String, sequence: String) : Boolean = Regex(sequence).matches(string);
+
+        fun <T : ActivityExtension> setGlideImage(activity: T, imageId: Int, url: String){
+            val requestOptions = RequestOptions()
+                .placeholder(R.drawable.ic_launcher_background)
+                .error(R.drawable.ic_launcher_background)
+
+            val iconImage = activity.findViewById<ImageView>(imageId)
+
+            Glide.with(activity)
+                .applyDefaultRequestOptions(requestOptions)
+                .load(url)
+                .into(iconImage)
+        }
     }
 }

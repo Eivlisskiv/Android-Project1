@@ -5,6 +5,7 @@ import android.util.Log
 import caqc.cgodin.android_project1.sqlite.DatabaseHandler
 import caqc.cgodin.android_project1.sqlite.models.Restaurant
 import caqc.cgodin.android_project1.sqlite.models.User
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -29,8 +30,16 @@ class Session {
             return true
         }
 
-        fun connect(user:User){
-            current_session = Session(user);
+        fun connect(user:User) {
+            current_session = Session(user)
+        }
+
+        fun connect(account: GoogleSignInAccount) {
+            current_session = Session(account)
+        }
+
+        fun logout() {
+            current_session = null;
         }
 
         fun parseJsonResult(json: JSONObject) = current_session?.parseJsonResult(json);
@@ -45,7 +54,7 @@ class Session {
                 if(r != null) field!!.email = email;
             }
         }
-    var location : Location? = null;
+    var location : Location = Location("");
 
     var searchResult : ArrayList<Restaurant> = arrayListOf()
         private set;
@@ -54,6 +63,10 @@ class Session {
 
     constructor(user: User){
         email = user.email;
+    }
+
+    constructor(account: GoogleSignInAccount){
+        email = account.email;
     }
 
     constructor(){
@@ -89,5 +102,16 @@ class Session {
         }
 
         searchResult = list;
+    }
+
+    fun getSessionLocation() : Location{
+        when(email){
+            "debug@m.ca" -> {
+                location.latitude = 45.8
+                location.longitude = -73.8
+            };
+        }
+
+        return location
     }
 }

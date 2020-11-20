@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Android-Project1</string>
 
+    <string name="facebook_app_id">[APP_ID]</string>
+    <string name="fb_login_protocol_scheme">fb[APP_ID]</string>
+
     <!--id format: {view id}_{language prefix}-->
     <!--Language prefixes: French: fr, English: en-->
 

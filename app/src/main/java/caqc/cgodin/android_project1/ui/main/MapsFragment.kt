@@ -60,7 +60,7 @@ class MapsFragment : Fragment() {
 
         initiateMapSettings(googleMap)
         map = googleMap;
-        mapMarker(Session.current_session?.location, "Current Location");
+        mapMarker(Session.current_session?.getSessionLocation(), "Current Location");
     }
 
     fun initiateMapSettings(googleMap: GoogleMap){
@@ -157,7 +157,7 @@ class MapsFragment : Fragment() {
     }
 
     fun googlePlacesQuery(recyclerView: RestaurantListFragment, distance: Double, callback: (JSONObject) -> Unit) {
-        placeQuery.location = Session.current_session?.location ?: Location("");
+        placeQuery.location = Session.current_session?.getSessionLocation() ?: Location("")
         placeQuery.distance = distance * 1000;
 
         placeQuery.request(callback)

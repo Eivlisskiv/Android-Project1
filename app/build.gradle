@@ -41,6 +41,10 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.4.10"
     implementation "com.google.android.gms:play-services-maps:17.0.0"
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+
+    implementation 'com.facebook.android:facebook-login:[8.1)'
+
     implementation "com.squareup.okhttp3:okhttp:4.9.0"
 
     //Les composants Room

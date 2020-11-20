@@ -2,6 +2,7 @@ package caqc.cgodin.android_project1
 
 import android.location.Location
 import android.util.Log
+import caqc.cgodin.android_project1.sqlite.DatabaseHandler
 import caqc.cgodin.android_project1.sqlite.models.Restaurant
 import caqc.cgodin.android_project1.sqlite.models.User
 import com.google.android.gms.maps.GoogleMap
@@ -12,12 +13,6 @@ import kotlin.random.Random
 
 //A logged session data
 class Session {
-
-    var inspectedRestoraunt: Restaurant? = null;
-    var location : Location? = null;
-
-    var searchResult : ArrayList<Restaurant> = arrayListOf()
-        private set;
 
     companion object{
 
@@ -41,6 +36,20 @@ class Session {
         fun parseJsonResult(json: JSONObject) = current_session?.parseJsonResult(json);
     }
 
+    var inspectedRestoraunt: Restaurant? = null
+        get() = field
+        set(value) {
+            field = value;
+            if(field != null && logged){
+                val r= Restaurant.getRestaurant(email!!, field!!.id!!)
+                if(r != null) field!!.email = email;
+            }
+        }
+    var location : Location? = null;
+
+    var searchResult : ArrayList<Restaurant> = arrayListOf()
+        private set;
+
     var email:String? = null;
 
     constructor(user: User){
@@ -52,7 +61,16 @@ class Session {
     }
 
     fun favorite(resto: Restaurant){
+        //Not logged, quit
         if(email == null) return;
+
+        //Already fav, remove from db
+        if(resto.isFav()){
+            DatabaseHandler.database.remove("restaurant", "email = \"$email\" and id = \"${resto.id}\"")
+        }else{//insert to db
+            resto.email = email;
+            DatabaseHandler.database.insert(resto)
+        }
     }
 
     fun parseJsonResult(json: JSONObject) {

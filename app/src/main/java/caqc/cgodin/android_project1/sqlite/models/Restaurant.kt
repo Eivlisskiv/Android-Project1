@@ -8,23 +8,23 @@ import org.json.JSONObject
 class Restaurant() : SqlEntity(Restaurant::class) {
 
     companion object{
-        fun getRestaurant(id:String): Restaurant? {
-            val restaurants =
-                DatabaseHandler.database.query(Restaurant::class,"select * from restaurant where id = \"$id\""){
-                    res, cursor ->
-                    res.asignCursorData(cursor)
-                }
-            return if(restaurants.isNotEmpty()) restaurants.first() else null;
-        }
 
-        fun getRestaurant(): List<Restaurant>? {
-            val restaurants =
-                DatabaseHandler.database.query(Restaurant::class,"select * from Restaurant"){
+        fun queryMany(query:String): List<Restaurant>? {
+            return DatabaseHandler.database.query(Restaurant::class,query){
                         res, cursor ->
                     res.asignCursorData(cursor)
                 }
-            return if(restaurants.isNotEmpty()) restaurants else null
         }
+
+        fun query(query:String): Restaurant?{
+            val restaurants = queryMany(query);
+            return if(restaurants != null && restaurants.isNotEmpty()) restaurants.first() else null;
+        }
+
+        fun getRestaurant(id:String, email:String): Restaurant? = query("select * from restaurant where id = \"$id\" and email = \"$email\"")
+        fun getRestaurant(id:String): Restaurant? = query("select * from restaurant where id = \"$id\"")
+        fun getRestaurant(): List<Restaurant>? = queryMany("select * from Restaurant")
+
     }
 
     var email: String? = null

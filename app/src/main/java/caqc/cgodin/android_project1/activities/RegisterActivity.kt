@@ -46,11 +46,11 @@ class RegisterActivity : ActivityExtension() {
         val user = User(email.toString(), pwd.toString(), "User${Random.nextInt(1000, 9999)}")
         DatabaseHandler.database.insert(user);
         Session.connect(user);
-        switchActivity(ExploreActivity::class.java, null)
+        switchActivity(ExploreActivity::class)
     }
 
     fun onClick_cancel(@Suppress("UNUSED_PARAMETER") v: View?){
-        switchActivity(MainActivity::class.java, null)
+        switchActivity(MainActivity::class)
     }
 
     fun test(){

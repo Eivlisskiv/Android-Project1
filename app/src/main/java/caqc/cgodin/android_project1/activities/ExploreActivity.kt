@@ -10,6 +10,7 @@ import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import caqc.cgodin.android_project1.R
 import caqc.cgodin.android_project1.Session
+import caqc.cgodin.android_project1.sqlite.RestaurantRecyclerAdapter
 import caqc.cgodin.android_project1.sqlite.models.Restaurant
 import caqc.cgodin.android_project1.ui.main.MapsFragment
 import caqc.cgodin.android_project1.ui.main.RestaurantListFragment
@@ -40,13 +41,6 @@ class ExploreActivity: ActivityExtension(R.id.exploreToolbar) {
         setEditText();
     }
 
-    fun <T : Fragment> setFragment(clazz: KClass<T>, id: Int) : T {
-        val instance = clazz.createInstance();
-        supportFragmentManager.beginTransaction()
-            .replace(id, instance).commit()
-        return instance;
-    }
-
     fun setSeekbar(){
         explore_distance_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
@@ -74,8 +68,6 @@ class ExploreActivity: ActivityExtension(R.id.exploreToolbar) {
             override fun afterTextChanged(p0: Editable?) { }
         })
     }
-
-    fun searchResto(from: Location, distance: Int): String = "geo:${from.latitude},${from.longitude}?z=${distance}q=restaurants";
 
     fun test(v: View?){
         mapFrag.clear()

@@ -1,5 +1,6 @@
 package caqc.cgodin.android_project1.sqlite
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,10 @@ class RestaurantRecyclerAdapter  : RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     fun submitList(restaurantList: List<Restaurant>){
+        Log.i("SubmitList", "DANS SUBMITLIST ***********************************************")
+        for(resto in restaurantList){
+            Log.i("Resto", "${resto.name}: ${resto.latitude ?: 0.0}, ${resto.longitude ?: 0.0}")
+        }
         items = restaurantList
     }
 
@@ -38,8 +43,8 @@ class RestaurantRecyclerAdapter  : RecyclerView.Adapter<RecyclerView.ViewHolder>
         val restaurantAdress = itemView.restaurant_adress
 
         fun bind(restaurant: Restaurant){
-            restaurantName.setText(restaurant.name)
-            restaurantAdress.setText(restaurant.id)
+            restaurantName.text = restaurant.name
+            restaurantAdress.text = restaurant.id
 
             val requestOptions = RequestOptions()
                 .placeholder(R.drawable.ic_launcher_background)

@@ -123,4 +123,6 @@ class Session {
 
         return location
     }
+
+    fun getFavorited(): List<Restaurant>? = if (email != null) Restaurant.queryMany("select * from restaurant where email = \"$email\"") else null;
 }

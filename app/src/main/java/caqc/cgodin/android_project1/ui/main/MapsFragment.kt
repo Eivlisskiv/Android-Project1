@@ -169,7 +169,7 @@ class MapsFragment : Fragment() {
         val handler = Handler()
         handler.postDelayed(
             Runnable {
-                recyclerView.restaurantAdapter.submitList(Session.current_session!!.searchResult)
+                recyclerView.submitList(Session.current_session!!.searchResult)
                 map?.clear()
                 for(resto in Session.current_session!!.searchResult){
                     Log.i("Resto", "${resto.name}: ${resto.latitude ?: 0.0}, ${resto.longitude ?: 0.0}")

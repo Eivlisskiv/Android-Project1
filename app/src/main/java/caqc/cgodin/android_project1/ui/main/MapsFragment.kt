@@ -60,7 +60,7 @@ class MapsFragment : Fragment() {
 
         initiateMapSettings(googleMap)
         map = googleMap;
-        mapMarker(Session.current_session?.location, "Current Location");
+        mapMarker(Session.current_session?.getSessionLocation(), "Current Location");
     }
 
     fun initiateMapSettings(googleMap: GoogleMap){
@@ -157,7 +157,7 @@ class MapsFragment : Fragment() {
     }
 
     fun googlePlacesQuery(recyclerView: RestaurantListFragment, distance: Double, callback: (JSONObject) -> Unit) {
-        placeQuery.location = Session.current_session?.location ?: Location("");
+        placeQuery.location = Session.current_session?.getSessionLocation() ?: Location("")
         placeQuery.distance = distance * 1000;
 
         placeQuery.request(callback)
@@ -169,7 +169,7 @@ class MapsFragment : Fragment() {
         val handler = Handler()
         handler.postDelayed(
             Runnable {
-                recyclerView.restaurantAdapter.submitList(Session.current_session!!.searchResult)
+                recyclerView.submitList(Session.current_session!!.searchResult)
                 map?.clear()
                 for(resto in Session.current_session!!.searchResult){
                     Log.i("Resto", "${resto.name}: ${resto.latitude ?: 0.0}, ${resto.longitude ?: 0.0}")

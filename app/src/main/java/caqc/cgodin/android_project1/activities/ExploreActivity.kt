@@ -70,7 +70,7 @@ class ExploreActivity: ActivityExtension(R.id.explore_Toolbar) {
         })
     }
 
-    fun test(v: View?){
+    fun onClickSearch(v: View?){
         mapFrag.clear()
         mapFrag.googlePlacesQuery(listFrag,distance + 0.00) { Session.parseJsonResult(it); }
     }

@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import caqc.cgodin.android_project1.R
+import caqc.cgodin.android_project1.Session
 import caqc.cgodin.android_project1.Utils
 import caqc.cgodin.android_project1.sqlite.RestaurantRecyclerAdapter
 import caqc.cgodin.android_project1.sqlite.TopSpacingItemDecoration
@@ -104,8 +105,10 @@ abstract class ActivityExtension(var toolbarId: Int? = null) : AppCompatActivity
     fun profile(item: MenuItem) =
         toolbar_btnClick(ProfileActivity::class)
 
-    fun logout(item: MenuItem) =
+    fun logout(item: MenuItem){
+        Session.logout();
         toolbar_btnClick(MainActivity::class)
+    }
 
     inline fun <reified T:ActivityExtension> toolbar_btnClick(clazz: KClass<T>){
         if(this is T) return

@@ -12,6 +12,7 @@ import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance
 import kotlin.reflect.full.isSubclassOf
 
+const val REBUILD = false;
 
 class DatabaseHandler(name: String, vararg ttables: KClass<*>) : SQLiteOpenHelper(
     AndroidProject1.context,
@@ -26,7 +27,7 @@ class DatabaseHandler(name: String, vararg ttables: KClass<*>) : SQLiteOpenHelpe
             val db = DatabaseHandler("ProjectDatabase",
                 User::class,
                 Restaurant::class)
-            db.upgrade()
+            if(REBUILD) db.upgrade()
             return db
         }
     }

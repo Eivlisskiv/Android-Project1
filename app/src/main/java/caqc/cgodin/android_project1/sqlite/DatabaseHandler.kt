@@ -104,8 +104,11 @@ class DatabaseHandler(name: String, vararg ttables: KClass<*>) : SQLiteOpenHelpe
         }
     }
 
-
     fun <T : SqlEntity> insert(entry: T){
         usingDB { db -> db.insert(entry.tableName(), null, entry.contentValues()) }
+    }
+
+    fun remove(table: String, condition:String){
+        usingDB { db -> db.delete(table, condition, null) }
     }
 }

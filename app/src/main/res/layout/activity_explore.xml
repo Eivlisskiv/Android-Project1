@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <include
-        android:id="@+id/restoToolbar"
+        android:id="@+id/explore_Toolbar"
         layout="@layout/toolbar" />
 
         <LinearLayout

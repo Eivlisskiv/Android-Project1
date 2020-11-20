@@ -19,7 +19,7 @@ import org.json.JSONObject
 import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance
 
-class ExploreActivity: ActivityExtension(R.id.exploreToolbar) {
+class ExploreActivity: ActivityExtension(R.id.explore_Toolbar) {
 
     lateinit var mapFrag: MapsFragment;
     lateinit var listFrag: RestaurantListFragment
@@ -33,6 +33,7 @@ class ExploreActivity: ActivityExtension(R.id.exploreToolbar) {
 
         mapFrag = setFragment(MapsFragment::class, R.id.explore_map_frag)
         listFrag = setFragment(RestaurantListFragment::class, R.id.explore_list_frag)
+        listFrag.activityParent = this
     }
 
     override fun onStart() {

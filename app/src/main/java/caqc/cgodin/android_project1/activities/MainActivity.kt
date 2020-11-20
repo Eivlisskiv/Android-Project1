@@ -15,7 +15,7 @@ class MainActivity() : ActivityExtension(R.id.mainToolbar) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        if(Session.logged) switchActivity(ListActivity::class, null)
+        if(Session.logged) switchActivity(ExploreActivity::class, null)
         super.onCreate(savedInstanceState)
 
         setContentView(

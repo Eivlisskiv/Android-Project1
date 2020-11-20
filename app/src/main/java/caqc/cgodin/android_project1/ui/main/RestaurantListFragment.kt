@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import caqc.cgodin.android_project1.R
 import caqc.cgodin.android_project1.Session
+import caqc.cgodin.android_project1.activities.ActivityExtension
 import caqc.cgodin.android_project1.sqlite.RestaurantRecyclerAdapter
 import caqc.cgodin.android_project1.sqlite.TopSpacingItemDecoration
 import caqc.cgodin.android_project1.sqlite.models.Restaurant
@@ -16,6 +17,7 @@ import kotlinx.android.synthetic.main.fragment_restaurant_list.*
 
 class RestaurantListFragment : Fragment() {
     lateinit var restaurantAdapter: RestaurantRecyclerAdapter
+    lateinit var activityParent: ActivityExtension
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +48,7 @@ class RestaurantListFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             val topSpacingDecoration = TopSpacingItemDecoration(30)
             addItemDecoration(topSpacingDecoration)
-            restaurantAdapter = RestaurantRecyclerAdapter()
+            restaurantAdapter = RestaurantRecyclerAdapter(activityParent)
             adapter = restaurantAdapter
         }
     }

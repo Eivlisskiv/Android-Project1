@@ -12,15 +12,20 @@ import kotlin.random.Random
 
 //A logged session data
 class Session {
-    companion object{
-        var location : Location? = null;
-        var searchResult : ArrayList<Restaurant> = arrayListOf()
-            private set;
 
-        var current_session: Session? = null
+    var inspectedRestoraunt: Restaurant? = null;
+    var location : Location? = null;
+
+    var searchResult : ArrayList<Restaurant> = arrayListOf()
+        private set;
+
+    companion object{
+
+        var current_session: Session? = Session()
             private set
+
         val logged: Boolean
-            get() = current_session != null
+            get() = current_session?.email != null
 
         fun connect(email:String, pwd: String): Boolean{
             val user = User.getUser(email);
@@ -33,28 +38,38 @@ class Session {
             current_session = Session(user);
         }
 
-        fun parseJsonResult(json: JSONObject) {
-
-            val results = json.getJSONArray("results")
-            if(results.length() < 1) {
-                searchResult = arrayListOf()
-                return;
-            }
-
-            val list : ArrayList<Restaurant> = arrayListOf()
-            val l = results.length() - 1
-            for(i in 0..l){
-                val resto = Restaurant(results.getJSONObject(i))
-                list.add(resto);
-            }
-
-            searchResult = list;
-        }
+        fun parseJsonResult(json: JSONObject) = current_session?.parseJsonResult(json);
     }
 
-    var email:String = "";
+    var email:String? = null;
 
     constructor(user: User){
-        email = user.email ?: "";
+        email = user.email;
+    }
+
+    constructor(){
+
+    }
+
+    fun favorite(resto: Restaurant){
+        if(email == null) return;
+    }
+
+    fun parseJsonResult(json: JSONObject) {
+
+        val results = json.getJSONArray("results")
+        if(results.length() < 1) {
+            searchResult = arrayListOf()
+            return;
+        }
+
+        val list : ArrayList<Restaurant> = arrayListOf()
+        val l = results.length() - 1
+        for(i in 0..l){
+            val resto = Restaurant(results.getJSONObject(i))
+            list.add(resto);
+        }
+
+        searchResult = list;
     }
 }

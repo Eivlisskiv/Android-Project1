@@ -36,7 +36,7 @@ class MapsFragment : Fragment() {
 
     companion object{
         val placeQuery: GooglePlaceQuery = GooglePlaceQuery(
-            "type=restaurant", Session.location ?: Location(""), 10.0,
+            "type=restaurant", Session.current_session?.location ?: Location(""), 10.0,
             SearchType.Nearby, "name", "formatted_address", "icon", "geometry"
         );
     }
@@ -60,7 +60,7 @@ class MapsFragment : Fragment() {
 
         initiateMapSettings(googleMap)
         map = googleMap;
-        mapMarker(Session.location, "Current Location");
+        mapMarker(Session.current_session?.location, "Current Location");
     }
 
     fun initiateMapSettings(googleMap: GoogleMap){
@@ -134,7 +134,7 @@ class MapsFragment : Fragment() {
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location: Location? ->
                 if(location != null){
-                    Session.location = location
+                    Session.current_session?.location = location
                     map?.moveCamera(
                         CameraUpdateFactory.newLatLng(
                             LatLng(location.latitude, location.longitude)
@@ -151,7 +151,7 @@ class MapsFragment : Fragment() {
     }
 
     fun googlePlacesQuery(recyclerView: RestaurantListFragment, distance: Double, callback: (JSONObject) -> Unit) {
-        placeQuery.location = Session.location ?: Location("");
+        placeQuery.location = Session.current_session?.location ?: Location("");
         placeQuery.distance = distance * 1000;
 
         placeQuery.request(callback)
@@ -163,9 +163,9 @@ class MapsFragment : Fragment() {
         val handler = Handler()
         handler.postDelayed(
             Runnable {
-                recyclerView.restaurantAdapter.submitList(Session.searchResult)
+                recyclerView.restaurantAdapter.submitList(Session.current_session!!.searchResult)
                 map?.clear()
-                for(resto in Session.searchResult){
+                for(resto in Session.current_session!!.searchResult){
                     Log.i("Resto", "${resto.name}: ${resto.latitude ?: 0.0}, ${resto.longitude ?: 0.0}")
                     val marker = LatLng(resto.latitude ?: 0.0, resto.longitude ?: 0.0)
                     map?.addMarker(MarkerOptions().position(marker).title(resto.name))

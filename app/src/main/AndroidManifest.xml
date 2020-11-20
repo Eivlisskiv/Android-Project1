@@ -21,6 +21,9 @@
         <activity
             android:name=".activities.ExploreActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".activities.RestoActivity"></activity>
+
         <activity android:name=".activities.Restaurant_Activity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

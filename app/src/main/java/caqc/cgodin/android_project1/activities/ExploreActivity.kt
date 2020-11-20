@@ -10,6 +10,7 @@ import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import caqc.cgodin.android_project1.R
 import caqc.cgodin.android_project1.Session
+import caqc.cgodin.android_project1.sqlite.RestaurantRecyclerAdapter
 import caqc.cgodin.android_project1.sqlite.models.Restaurant
 import caqc.cgodin.android_project1.ui.main.MapsFragment
 import caqc.cgodin.android_project1.ui.main.RestaurantListFragment

@@ -30,7 +30,6 @@ class RestaurantListFragment : Fragment() {
         val inflater = inflater.inflate(R.layout.fragment_restaurant_list, container, false)
         var recyclerview = inflater.findViewById<RecyclerView>(R.id.restaurant_recyclerview)
         initRecyclerView(recyclerview)
-        addDataSet()
         return inflater
     }
 

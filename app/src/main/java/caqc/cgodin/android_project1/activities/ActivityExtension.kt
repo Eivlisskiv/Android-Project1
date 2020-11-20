@@ -16,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import caqc.cgodin.android_project1.R
@@ -26,6 +27,8 @@ import caqc.cgodin.android_project1.sqlite.models.Restaurant
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.fragment_restaurant_list.*
 import org.w3c.dom.Text
+import kotlin.reflect.KClass
+import kotlin.reflect.full.createInstance
 
 abstract class ActivityExtension(var toolbarId: Int? = null) : AppCompatActivity() {
 
@@ -88,24 +91,31 @@ abstract class ActivityExtension(var toolbarId: Int? = null) : AppCompatActivity
     fun verifyInputs(vararg inputs: EditText): Boolean =
         verifyInputs(*inputs, func = { _, isEmpty ->  if (isEmpty) "empty" else null })
 
-    fun <T : AppCompatActivity> switchActivity(clazz: Class<T>, func: ((Intent) -> Intent)?): Intent{
-        val intent = Intent(this, clazz)
+    fun <T : AppCompatActivity> switchActivity(clazz: KClass<T>, func: ((Intent) -> Intent)? = null): Intent{
+        val intent = Intent(this, clazz.java)
         if(func != null) func(intent)
         startActivity(intent)
         return intent;
     }
 
     fun explore(item: MenuItem) =
-        toolbar_btnClick(ExploreActivity::class.java)
+        toolbar_btnClick(ExploreActivity::class)
 
     fun profile(item: MenuItem) =
-        toolbar_btnClick(ProfileActivity::class.java)
+        toolbar_btnClick(ProfileActivity::class)
 
     fun logout(item: MenuItem) =
-        toolbar_btnClick(MainActivity::class.java)
+        toolbar_btnClick(MainActivity::class)
 
-    inline fun <reified T:ActivityExtension> toolbar_btnClick(clazz: Class<T>){
+    inline fun <reified T:ActivityExtension> toolbar_btnClick(clazz: KClass<T>){
         if(this is T) return
         switchActivity(clazz, null)
+    }
+
+    fun <T : Fragment> setFragment(clazz: KClass<T>, id: Int) : T {
+        val instance = clazz.createInstance();
+        supportFragmentManager.beginTransaction()
+            .replace(id, instance).commit()
+        return instance;
     }
 }

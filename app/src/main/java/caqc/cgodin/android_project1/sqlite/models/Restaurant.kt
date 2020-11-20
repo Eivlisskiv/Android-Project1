@@ -61,4 +61,5 @@ class Restaurant() : SqlEntity(Restaurant::class) {
         this.longitude = location.getDouble("lng")
     }
 
+    fun isFav() : Boolean = email != null;
 }

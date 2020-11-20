@@ -15,7 +15,7 @@ class MainActivity() : ActivityExtension(R.id.mainToolbar) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        if(Session.logged) switchActivity(ListActivity::class.java, null)
+        if(Session.logged) switchActivity(ListActivity::class, null)
         super.onCreate(savedInstanceState)
 
         setContentView(
@@ -40,7 +40,7 @@ class MainActivity() : ActivityExtension(R.id.mainToolbar) {
         if(Session.connect(
                 login_email_tb.text.toString(),
                 login_password_tb.text.toString())){
-            switchActivity(ExploreActivity::class.java, null)
+            switchActivity(ExploreActivity::class, null)
         }
         else{
             Log.i("App","Login failed")
@@ -49,6 +49,6 @@ class MainActivity() : ActivityExtension(R.id.mainToolbar) {
     }
 
     fun register(@Suppress("UNUSED_PARAMETER") v: View?){
-        switchActivity(RegisterActivity::class.java, null)
+        switchActivity(RegisterActivity::class, null)
     }
 }

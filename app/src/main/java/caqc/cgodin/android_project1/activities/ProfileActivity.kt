@@ -1,27 +1,30 @@
 package caqc.cgodin.android_project1.activities
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.AttributeSet
+import android.view.View
 import caqc.cgodin.android_project1.R
 import caqc.cgodin.android_project1.Session
-import caqc.cgodin.android_project1.sqlite.DatabaseHandler
 import caqc.cgodin.android_project1.sqlite.models.Restaurant
+import caqc.cgodin.android_project1.ui.main.ProfileInfoFragment
 import caqc.cgodin.android_project1.ui.main.RestaurantListFragment
-import kotlin.reflect.KClass
-import kotlin.reflect.full.createInstance
 
 class ProfileActivity : ActivityExtension(R.id.profileToolbar) {
 
     lateinit var listFrag: RestaurantListFragment
+    lateinit var infoFrag: ProfileInfoFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile, arrayOf())
 
         listFrag = setFragment(RestaurantListFragment::class, R.id.profile_list_frag)
+        infoFrag = setFragment(ProfileInfoFragment::class, R.id.profile_info_frag)
+
+        setContentView(R.layout.activity_profile, arrayOf(R.id.ShowFav))
+
         listFrag.activityParent = this
-        updateRecyclerView()
+        infoFrag.activityParent = this
     }
 
     fun updateRecyclerView(){

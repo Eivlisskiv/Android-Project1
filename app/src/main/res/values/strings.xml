@@ -31,6 +31,12 @@
     <string name="login_login_button_en">Login</string>
     <string name="login_login_button_fr">Connexion</string>
 
+    <string name="profile_ShowFav_button_en">Show Favorites</string>
+    <string name="profile_ShowFav_button_fr">Montrer les restaurents favoris</string>
+
+    <string name="resto_commander_button_en">Order</string>
+    <string name="ressto_commander_button_fr">Commander</string>
+
     <string name="login_register_button_en">Sign Up</string>
     <string name="login_register_button_fr">Inscription</string>
 

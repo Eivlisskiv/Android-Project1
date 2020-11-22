@@ -118,7 +118,11 @@ class Session {
             "debug@m.ca" -> {
                 location.latitude = 45.8
                 location.longitude = -73.8
-            };
+            }
+            "phile@wtv.com" -> {
+                location.latitude = 45.8
+                location.longitude = -73.8
+            }
         }
 
         return location

@@ -11,6 +11,7 @@ import caqc.cgodin.android_project1.Session
 import caqc.cgodin.android_project1.Utils
 import caqc.cgodin.android_project1.sqlite.models.Restaurant
 import caqc.cgodin.android_project1.ui.main.MapsFragment
+import caqc.cgodin.android_project1.ui.main.MenuFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
@@ -19,12 +20,14 @@ class RestoActivity : ActivityExtension(R.id.RestoToolbar) {
     lateinit var mapFrag: MapsFragment;
     lateinit var resto: Restaurant;
     lateinit var button: Button;
+    lateinit var menuFrag: MenuFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_resto)
 
         mapFrag = setFragment(MapsFragment::class, R.id.resto_map_frag)
+        menuFrag = setFragment(MenuFragment::class, R.id.resto_menu_frag)
         initActivityData()
     }
 

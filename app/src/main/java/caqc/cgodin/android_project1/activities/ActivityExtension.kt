@@ -44,9 +44,7 @@ abstract class ActivityExtension(var toolbarId: Int? = null) : AppCompatActivity
             return true
         }
         return false
-
     }
-
 
     fun setToolbar(){
         if (hasToolbar){

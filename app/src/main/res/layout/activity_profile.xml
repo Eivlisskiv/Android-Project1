@@ -54,7 +54,7 @@
                 </LinearLayout>
 
                 <FrameLayout
-                    android:id="@+id/profile_map_frag"
+                    android:id="@+id/profile_info_frag"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 

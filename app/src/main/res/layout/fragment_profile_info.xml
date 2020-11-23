@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".ui.main.ProfileInfoFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -12,15 +12,18 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_user_email"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/tv_user_email"/>
+            android:gravity="center"
+            android:textStyle="bold"/>
 
         <Button
             android:id="@+id/ShowFav"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:text="Button" />
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textStyle="bold"/>
     </LinearLayout>
 
 </FrameLayout>

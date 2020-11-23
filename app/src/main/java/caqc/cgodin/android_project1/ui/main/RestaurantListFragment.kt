@@ -16,6 +16,7 @@ import caqc.cgodin.android_project1.sqlite.models.Restaurant
 import kotlinx.android.synthetic.main.fragment_restaurant_list.*
 
 class RestaurantListFragment : Fragment() {
+    var addData: ArrayList<Restaurant>? = null
     lateinit var restaurantAdapter: RestaurantRecyclerAdapter
     lateinit var activityParent: ActivityExtension
 
@@ -33,9 +34,8 @@ class RestaurantListFragment : Fragment() {
     }
 
     fun addDataSet(){
-        val data = Session.current_session?.searchResult
-        if (data != null) {
-            restaurantAdapter.submitList(data)
+        if (addData != null) {
+            restaurantAdapter.submitList(addData!!)
         }
     }
 

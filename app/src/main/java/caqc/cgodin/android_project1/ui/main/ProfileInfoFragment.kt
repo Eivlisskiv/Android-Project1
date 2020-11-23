@@ -44,9 +44,6 @@ class ProfileInfoFragment : Fragment() {
         // Inflate the layout for this fragment
         var inflater = inflater.inflate(R.layout.fragment_profile_info, container, false)
         inflater.findViewById<TextView>(R.id.tv_user_email).text = "Email: " + (Session.current_session?.email ?: "")
-        inflater.ShowFav.setOnClickListener {
-            activityParent.updateRecyclerView()
-        }
         return inflater
     }
 

@@ -90,6 +90,8 @@ class MainActivity() : ActivityExtension(R.id.mainToolbar) {
         }
         else{
             Log.i("App", "Login failed")
+            login_email_tb.error = Utils.getLangString(this, "login_failed")
+            login_password_tb.error = Utils.getLangString(this, "login_failed")
             //Invalid log in info
         }
     }

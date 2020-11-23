@@ -25,12 +25,7 @@ class ProfileActivity : ActivityExtension(R.id.profileToolbar) {
 
         listFrag.activityParent = this
         infoFrag.activityParent = this
-    }
 
-    fun updateRecyclerView(){
-        val items = Session.current_session?.getFavorited()
-        if(items == null || items.isEmpty()) return;
-
-        listFrag.submitList(items as ArrayList<Restaurant>);
+        listFrag.addData = Session.current_session?.getFavorited() as ArrayList<Restaurant>?
     }
 }

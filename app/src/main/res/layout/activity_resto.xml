@@ -59,6 +59,11 @@
         </LinearLayout>
 
         <FrameLayout
+            android:id="@+id/resto_menu_frag"
+            android:layout_width="match_parent"
+            android:layout_height="214dp" />
+
+        <FrameLayout
             android:id="@+id/resto_map_frag"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

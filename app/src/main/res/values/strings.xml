@@ -31,6 +31,15 @@
     <string name="login_login_button_en">Login</string>
     <string name="login_login_button_fr">Connexion</string>
 
+    <string name="login_failed_en">Invalid credentials</string>
+    <string name="login_failed_fr">Informations invalides</string>
+
+    <string name="ShowFav_en">Show Favorites</string>
+    <string name="ShowFav_fr">Montrer les restaurents favoris</string>
+
+    <string name="commander_en">Order</string>
+    <string name="commander_fr">Commander</string>
+
     <string name="login_register_button_en">Sign Up</string>
     <string name="login_register_button_fr">Inscription</string>
 

@@ -44,9 +44,7 @@ abstract class ActivityExtension(var toolbarId: Int? = null) : AppCompatActivity
             return true
         }
         return false
-
     }
-
 
     fun setToolbar(){
         if (hasToolbar){
@@ -66,7 +64,7 @@ abstract class ActivityExtension(var toolbarId: Int? = null) : AppCompatActivity
         languageDependantViews?.forEach {
             val view = findViewById<TextView>(it)
             Log.i("Debug", "Get string value for $it")
-            view.text = Utils.findViewString(this, it)
+            if (view != null) view.text = Utils.findViewString(this, it)
         }
     }
 

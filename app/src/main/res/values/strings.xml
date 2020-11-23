@@ -34,11 +34,14 @@
     <string name="login_failed_en">Invalid credentials</string>
     <string name="login_failed_fr">Informations invalides</string>
 
-    <string name="ShowFav_en">Show Favorites</string>
-    <string name="ShowFav_fr">Montrer les restaurents favoris</string>
-
     <string name="commander_en">Order</string>
     <string name="commander_fr">Commander</string>
+
+    <string name="tv_add_fav_en">Add some restaurants to your favorites by clicking on the info button</string>
+    <string name="tv_add_fav_fr">Ajoutez des restaurents a votre liste des favoris en cliquant sur le bouton info</string>
+
+    <string name="commande_en">Your order for %s has been placed</string>
+    <string name="commande_fr">La commande pour %s a été passée</string>
 
     <string name="login_register_button_en">Sign Up</string>
     <string name="login_register_button_fr">Inscription</string>

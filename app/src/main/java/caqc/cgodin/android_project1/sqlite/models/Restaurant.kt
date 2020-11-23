@@ -57,5 +57,5 @@ class Restaurant() : SqlEntity(Restaurant::class) {
         this.phone = json.getString("formatted_phone_number")
     }
 
-    fun isFav() : Boolean = email != null;
+    fun isFav() : Boolean = email != null
 }

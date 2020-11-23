@@ -1,17 +1,12 @@
 package caqc.cgodin.android_project1
 
 import android.location.Location
-import android.util.Log
 import caqc.cgodin.android_project1.sqlite.DatabaseHandler
 import caqc.cgodin.android_project1.sqlite.models.Restaurant
 import caqc.cgodin.android_project1.sqlite.models.User
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import org.json.JSONObject
-import kotlin.random.Random
 
 //A logged session data
 class Session {
@@ -54,10 +49,7 @@ class Session {
         get() = field
         set(value) {
             field = value;
-            if(field != null && logged){
-                val r= Restaurant.getRestaurant(email!!, field!!.id!!)
-                if(r != null) field!!.email = email;
-            }
+            if(field != null) verifyFav(field!!)
         }
     var location : Location = Location("");
 
@@ -89,6 +81,7 @@ class Session {
         //Already fav, remove from db
         if(resto.isFav()){
             DatabaseHandler.database.remove("restaurant", "email = \"$email\" and id = \"${resto.id}\"")
+            resto.email = null
         }else{//insert to db
             resto.email = email;
             DatabaseHandler.database.insert(resto)
@@ -129,4 +122,11 @@ class Session {
     }
 
     fun getFavorited(): List<Restaurant>? = if (email != null) Restaurant.queryMany("select * from restaurant where email = \"$email\"") else null;
+
+    fun verifyFav(restaurant: Restaurant) {
+        if(logged){
+            val r= Restaurant.getRestaurant(restaurant!!.id!!, email!!)
+            if(r != null) restaurant!!.email = r.email
+        }
+    }
 }

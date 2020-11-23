@@ -14,7 +14,7 @@ open class  SqlEntity() {
 
     companion object{
         fun toSqlTable(clazz: KClass<*>?): String{
-            if(clazz == null) return "";
+            if(clazz == null) return ""
             return """
                 CREATE TABLE ${clazz.simpleName} (
                     ${fieldsToColumns(clazz).joinToString()}
@@ -37,22 +37,22 @@ open class  SqlEntity() {
         }
     }
 
-    private var clazz : KClass<*>? = null;
+    private var clazz : KClass<*>? = null
 
     constructor(c: KClass<*>) : this() {
-        clazz = c;
+        clazz = c
     }
 
     fun tableName(): String? {
-        return clazz?.simpleName;
+        return clazz?.simpleName
     }
 
     fun toSqlTable() : String? {
-        return SqlEntity.toSqlTable(clazz);
+        return SqlEntity.toSqlTable(clazz)
     }
 
     fun toEntryQuery(): String {
-        if(clazz == null) return "";
+        if(clazz == null) return ""
         return """
             insert into ${clazz!!.simpleName} (${Utils.getFields(clazz!!).joinToString{ it.name }})
             values (${Utils.getFields(clazz!!).map { it.call(this) }.joinToString(
@@ -64,18 +64,18 @@ open class  SqlEntity() {
     }
 
     fun contentValues(): ContentValues? {
-        if(clazz == null) return null;
+        if(clazz == null) return null
         val values = ContentValues()
         Utils.getFields(clazz!!).forEach{
             val v = it.call(this).toString()
             Log.i("App", v.toString())
             values.put(it.name, v)
         }
-        return values;
+        return values
     }
 
     fun <T : SqlEntity> setWithCursor(c: KClass<T>, cursor: Cursor) {
-        clazz = c;
+        clazz = c
         Utils.getFields(clazz as KClass<*>).forEach{
             it.setter.call(this, getColumnData(it, cursor))
         }
@@ -86,9 +86,9 @@ open class  SqlEntity() {
         var t = prop.returnType.toString()
         t = t.substring(t.indexOf('.') + 1).trimEnd('?')
         return when(t){
-            "Int" -> cursor.getInt(index);
+            "Int" -> cursor.getInt(index)
             "Double" -> cursor.getDouble(index)
-            else -> cursor.getString(index);
-        } as T;
+            else -> cursor.getString(index)
+        } as T
     }
 }

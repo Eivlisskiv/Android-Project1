@@ -58,8 +58,7 @@ class RestaurantRecyclerAdapter(val activity: ActivityExtension)  : RecyclerView
             restaurantIsFav.imageAlpha = if(restaurant.isFav()) 255 else 0
 
             restaurantBtn.setOnClickListener {
-                Session.current_session?.inspectedRestoraunt = restaurant
-                activity.switchActivity(RestoActivity::class)
+                restaurant.inspect(activity)
             }
 
             restaurantCardview.setOnClickListener {

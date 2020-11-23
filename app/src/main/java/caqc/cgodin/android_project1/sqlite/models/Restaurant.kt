@@ -1,8 +1,14 @@
 package caqc.cgodin.android_project1.sqlite.models
 
 import android.database.Cursor
+import caqc.cgodin.android_project1.AndroidProject1
+import caqc.cgodin.android_project1.GooglePlaceQuery
+import caqc.cgodin.android_project1.Session
+import caqc.cgodin.android_project1.activities.ActivityExtension
+import caqc.cgodin.android_project1.activities.RestoActivity
 import caqc.cgodin.android_project1.sqlite.DatabaseHandler
 import caqc.cgodin.android_project1.sqlite.SqlEntity
+import com.google.android.libraries.places.api.model.Place
 import org.json.JSONObject
 
 class Restaurant() : SqlEntity(Restaurant::class) {
@@ -51,11 +57,21 @@ class Restaurant() : SqlEntity(Restaurant::class) {
         val location = json.getJSONObject("geometry").getJSONObject("location")
         this.latitude = location.getDouble("lat")
         this.longitude = location.getDouble("lng")
-
-        this.address = json.getString("adr_address")
-        this.website = json.getString("website")
-        this.phone = json.getString("formatted_phone_number")
     }
 
     fun isFav() : Boolean = email != null
+
+    fun <T : ActivityExtension> inspect(activity: T){
+        Session.current_session!!.inspectedRestoraunt = this;
+        GooglePlaceQuery.getPlace(this.id!!, Place.Field.ADDRESS, Place.Field.WEBSITE_URI, Place.Field.PHONE_NUMBER){
+            loadPlace(it)
+            activity.switchActivity(RestoActivity::class)
+        }
+    }
+
+    fun loadPlace(place : Place){
+        this.address = place.address;
+        this.website = place.websiteUri.toString();
+        this.phone = place.phoneNumber;
+    }
 }

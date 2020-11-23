@@ -3,7 +3,15 @@ package caqc.cgodin.android_project1
 import android.location.Location
 import android.util.Log
 import caqc.cgodin.android_project1.activities.MainActivity
+import caqc.cgodin.android_project1.sqlite.models.Restaurant
+import com.google.android.gms.tasks.Task
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.net.FetchPlaceRequest
+import com.google.android.libraries.places.api.net.FetchPlaceResponse
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import okhttp3.*
+import okhttp3.internal.wait
 import org.json.JSONObject
 import java.io.IOException
 import java.net.URL
@@ -15,6 +23,15 @@ enum class SearchType(val value:String){
 
 //                     //&type=restaurants
 class GooglePlaceQuery(var inputParam:String, var location: Location, var distance: Double, val type: SearchType = SearchType.Nearby, vararg val fields: String) {
+
+    companion object{
+        fun getPlace(id:String, vararg fields: Place.Field, func: (Place) -> Unit) {
+            val request = FetchPlaceRequest.builder(id, fields.asList()).build()
+            val task = AndroidProject1.placesClient.fetchPlace(request)
+            task.addOnSuccessListener { func(it.place) }
+        }
+
+    }
 
     val client: OkHttpClient = OkHttpClient()
 

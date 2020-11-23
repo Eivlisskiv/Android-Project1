@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import caqc.cgodin.android_project1.AndroidProject1
+import caqc.cgodin.android_project1.sqlite.models.Commande
 import caqc.cgodin.android_project1.sqlite.models.Restaurant
 import caqc.cgodin.android_project1.sqlite.models.User
 import kotlin.math.log
@@ -26,7 +27,9 @@ class DatabaseHandler(name: String, vararg ttables: KClass<*>) : SQLiteOpenHelpe
         fun initDataBase(): DatabaseHandler {
             val db = DatabaseHandler("ProjectDatabase",
                 User::class,
-                Restaurant::class)
+                Restaurant::class,
+                Commande::class
+            )
             if(REBUILD) db.upgrade()
             return db
         }

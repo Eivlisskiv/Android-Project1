@@ -34,6 +34,7 @@ class ExploreActivity: ActivityExtension(R.id.explore_Toolbar) {
         mapFrag = setFragment(MapsFragment::class, R.id.explore_map_frag)
         listFrag = setFragment(RestaurantListFragment::class, R.id.explore_list_frag)
         listFrag.activityParent = this
+        listFrag.addData = Session.current_session?.searchResult
     }
 
     override fun onStart() {

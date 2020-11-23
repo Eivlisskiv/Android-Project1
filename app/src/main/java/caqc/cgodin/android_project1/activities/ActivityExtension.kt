@@ -64,7 +64,11 @@ abstract class ActivityExtension(var toolbarId: Int? = null) : AppCompatActivity
         languageDependantViews?.forEach {
             val view = findViewById<TextView>(it)
             Log.i("Debug", "Get string value for $it")
+<<<<<<< HEAD
             if(view != null) view.text = Utils.findViewString(this, it)
+=======
+            if (view != null) view.text = Utils.findViewString(this, it)
+>>>>>>> e9c10461f44d98020ce503a072dbd10d895f15b4
         }
     }
 

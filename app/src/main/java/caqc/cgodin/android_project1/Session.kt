@@ -54,10 +54,7 @@ class Session {
         get() = field
         set(value) {
             field = value;
-            if(field != null && logged){
-                val r= Restaurant.getRestaurant(email!!, field!!.id!!)
-                if(r != null) field!!.email = email;
-            }
+            verifyFav()
         }
     var location : Location = Location("");
 
@@ -89,6 +86,7 @@ class Session {
         //Already fav, remove from db
         if(resto.isFav()){
             DatabaseHandler.database.remove("restaurant", "email = \"$email\" and id = \"${resto.id}\"")
+            resto.email = null
         }else{//insert to db
             resto.email = email;
             DatabaseHandler.database.insert(resto)
@@ -129,4 +127,11 @@ class Session {
     }
 
     fun getFavorited(): List<Restaurant>? = if (email != null) Restaurant.queryMany("select * from restaurant where email = \"$email\"") else null;
+
+    fun verifyFav(){
+        if(inspectedRestoraunt != null && logged){
+            val r= Restaurant.getRestaurant(inspectedRestoraunt!!.id!!, email!!)
+            if(r != null) inspectedRestoraunt!!.email = r.email
+        }
+    }
 }

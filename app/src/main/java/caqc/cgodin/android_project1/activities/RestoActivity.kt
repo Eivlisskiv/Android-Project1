@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import caqc.cgodin.android_project1.R
 import caqc.cgodin.android_project1.Session
 import caqc.cgodin.android_project1.Utils
@@ -14,6 +15,7 @@ import caqc.cgodin.android_project1.ui.main.MapsFragment
 import caqc.cgodin.android_project1.ui.main.MenuFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import kotlinx.android.synthetic.main.activity_resto.*
 
 class RestoActivity : ActivityExtension(R.id.RestoToolbar) {
 
@@ -24,7 +26,7 @@ class RestoActivity : ActivityExtension(R.id.RestoToolbar) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_resto)
+        setContentView(R.layout.activity_resto, arrayOf(R.id.commander))
 
         mapFrag = setFragment(MapsFragment::class, R.id.resto_map_frag)
         menuFrag = setFragment(MenuFragment::class, R.id.resto_menu_frag)
@@ -59,5 +61,11 @@ class RestoActivity : ActivityExtension(R.id.RestoToolbar) {
     fun onClick(v: View?){
         Session.current_session?.favorite(resto);
         button.text = if(resto.isFav()) "Unfav" else "fav"
+    }
+
+    fun commander(v: View?){
+        val commande = Utils.getLangString(this, "commande").format(tb_commande.text.trim())
+        Toast.makeText(applicationContext,commande,Toast.LENGTH_SHORT).show()
+        tb_commande.text = null
     }
 }

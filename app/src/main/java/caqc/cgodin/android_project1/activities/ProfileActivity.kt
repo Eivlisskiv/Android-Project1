@@ -18,11 +18,11 @@ class ProfileActivity : ActivityExtension(R.id.profileToolbar) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setContentView(R.layout.activity_profile)
+
         listFrag = setFragment(RestaurantListFragment::class, R.id.profile_list_frag)
         infoFrag = setFragment(ProfileInfoFragment::class, R.id.profile_info_frag)
-
-        setContentView(R.layout.activity_profile, arrayOf(R.id.ShowFav))
-
+        
         listFrag.activityParent = this
         infoFrag.activityParent = this
 

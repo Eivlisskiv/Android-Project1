@@ -43,7 +43,7 @@ class ProfileInfoFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         var inflater = inflater.inflate(R.layout.fragment_profile_info, container, false)
-        inflater.findViewById<TextView>(R.id.tv_user_email).text = "Email: " + (Session.current_session?.email ?: "")
+        inflater.findViewById<TextView>(R.id.tv_user_email).text = (Session.current_session?.email ?: "")
         return inflater
     }
 

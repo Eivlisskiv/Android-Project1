@@ -10,10 +10,7 @@ class Restaurant() : SqlEntity(Restaurant::class) {
     companion object{
 
         fun queryMany(query:String): List<Restaurant>? {
-            return DatabaseHandler.database.query(Restaurant::class,query){
-                        res, cursor ->
-                    res.asignCursorData(cursor)
-                }
+            return DatabaseHandler.database.query(Restaurant::class,query, null)
         }
 
         fun query(query:String): Restaurant?{
@@ -61,5 +58,5 @@ class Restaurant() : SqlEntity(Restaurant::class) {
         this.longitude = location.getDouble("lng")
     }
 
-    fun isFav() : Boolean = email != null;
+    fun isFav() : Boolean = email != null
 }

@@ -48,10 +48,14 @@ class RestaurantRecyclerAdapter(val activity: ActivityExtension)  : RecyclerView
         val restaurantAdress = itemView.findViewById<TextView>(R.id.restaurant_adress)
         val restaurantBtn = itemView.findViewById<Button>(R.id.Btn_info_resto)
         val restaurantCardview = itemView.findViewById<CardView>(R.id.Cardview_resto)
+        val restaurantIsFav = itemView.findViewById<ImageView>(R.id.fav_star)
 
         fun bind(restaurant: Restaurant){
             restaurantName.text = restaurant.name
             restaurantAdress.text = restaurant.id
+
+            Session.current_session?.verifyFav(restaurant)
+            restaurantIsFav.imageAlpha = if(restaurant.isFav()) 255 else 0
 
             restaurantBtn.setOnClickListener {
                 Session.current_session?.inspectedRestoraunt = restaurant

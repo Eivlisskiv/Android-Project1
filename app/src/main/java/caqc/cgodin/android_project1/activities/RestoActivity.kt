@@ -31,6 +31,7 @@ class RestoActivity : ActivityExtension(R.id.RestoToolbar) {
         mapFrag = setFragment(MapsFragment::class, R.id.resto_map_frag)
         menuFrag = setFragment(MenuFragment::class, R.id.resto_menu_frag)
         initActivityData()
+        mapFrag.zoomTo(resto.latitude, resto.longitude)
     }
 
     fun initActivityData(){
@@ -47,10 +48,10 @@ class RestoActivity : ActivityExtension(R.id.RestoToolbar) {
     }
 
     fun initTextViews(){
-        val lblNom = findViewById<TextView>(R.id.resto_nom_label)
-        lblNom.text = resto.name;
-        val lblAdresse = findViewById<TextView>(R.id.resto_adresse_label)
-        lblAdresse.text = resto.id
+        findViewById<TextView>(R.id.resto_nom_label).text = resto.name;
+        findViewById<TextView>(R.id.resto_adresse_label).text = resto.address
+        findViewById<TextView>(R.id.resto_website_label).text = resto.website
+        findViewById<TextView>(R.id.resto_adresse_label).text = resto.phone
     }
 
     fun initButton(){

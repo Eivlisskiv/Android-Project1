@@ -48,6 +48,22 @@
                 android:text="TextView"
                 android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/resto_website_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="TextView"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/resto_phone_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="TextView"
+                android:textStyle="bold" />
+
             <Button
                 android:id="@+id/resto_fav_btn"
                 android:layout_width="match_parent"

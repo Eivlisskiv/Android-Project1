@@ -83,7 +83,6 @@ open class  SqlEntity() {
 
     fun <T> getColumnData(prop : KMutableProperty<T>, cursor: Cursor) : T{
         val index = cursor.getColumnIndex(prop.name)
-        //return cursor.getString(index) as T
         var t = prop.returnType.toString()
         t = t.substring(t.indexOf('.') + 1).trimEnd('?')
         return when(t){

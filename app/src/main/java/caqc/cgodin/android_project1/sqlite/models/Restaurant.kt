@@ -28,6 +28,10 @@ class Restaurant() : SqlEntity(Restaurant::class) {
     var name: String? = null
     var id: String? = null
     var logoUrl: String? = null
+    var address: String? = null;
+    var website: String? = null;
+    var phone: String? = null;
+
     var latitude: Double? = null
     var longitude: Double? = null
 
@@ -40,15 +44,6 @@ class Restaurant() : SqlEntity(Restaurant::class) {
         this.longitude = longitude
     }
 
-    fun asignCursorData(cursor: Cursor){
-        this.email = cursor.getString(0)
-        this.name = cursor.getString(1)
-        this.id = cursor.getString(2)
-        this.logoUrl = cursor.getString(3)
-        this.latitude = cursor.getDouble(4)
-        this.longitude = cursor.getDouble(5)
-    }
-
     constructor(json: JSONObject) : this(){
         this.name = json.getString("name")
         this.id = json.getString("place_id")
@@ -56,6 +51,10 @@ class Restaurant() : SqlEntity(Restaurant::class) {
         val location = json.getJSONObject("geometry").getJSONObject("location")
         this.latitude = location.getDouble("lat")
         this.longitude = location.getDouble("lng")
+
+        this.address = json.getString("adr_address")
+        this.website = json.getString("website")
+        this.phone = json.getString("formatted_phone_number")
     }
 
     fun isFav() : Boolean = email != null

@@ -6,9 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".activities.RestoActivity">
 
-    <include
-        android:id="@+id/RestoToolbar"
-        layout="@layout/toolbar" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,8 +18,8 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <include
-            android:id="@+id/RestoToolbar"
-            layout="@layout/toolbar" />
+        android:id="@+id/RestoToolbar"
+        layout="@layout/toolbar" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,6 +48,22 @@
                 android:text="TextView"
                 android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/resto_website_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="TextView"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/resto_phone_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="TextView"
+                android:textStyle="bold" />
+
             <Button
                 android:id="@+id/resto_fav_btn"
                 android:layout_width="match_parent"
@@ -62,6 +76,27 @@
             android:id="@+id/resto_menu_frag"
             android:layout_width="match_parent"
             android:layout_height="214dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/tb_commande"
+                android:layout_width="222dp"
+                android:layout_height="wrap_content" />
+
+            <Space
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/commander"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="commander"/>
+        </LinearLayout>
 
         <FrameLayout
             android:id="@+id/resto_map_frag"

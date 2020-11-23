@@ -6,6 +6,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent">
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,7 +15,9 @@
 
         <include
             android:id="@+id/profileToolbar"
-            layout="@layout/toolbar" />
+            layout="@layout/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -41,6 +45,13 @@
                     android:id="@+id/profile_info_frag"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:id="@+id/tv_add_fav"/>
 
                 <FrameLayout
                     android:id="@+id/profile_list_frag"

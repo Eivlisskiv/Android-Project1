@@ -25,7 +25,7 @@ import java.util.*
 import javax.security.auth.callback.Callback
 
 
-class MainActivity() : ActivityExtension(R.id.mainToolbar) {
+class MainActivity() : ActivityExtension() {
 
     val GOOGLE_SIGN_IN = 101;
     val FACEBOOK_LOGIN = 202

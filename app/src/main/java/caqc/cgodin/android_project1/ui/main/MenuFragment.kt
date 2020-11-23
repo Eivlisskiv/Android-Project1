@@ -40,11 +40,7 @@ class MenuFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var inflater = inflater.inflate(R.layout.fragment_menu, container, false)
-        inflater.findViewById<Button>(R.id.commander).setOnClickListener {
-            Toast.makeText(getApplicationContext(),"La commande pour " + inflater.findViewById<EditText>(R.id.tb_commande).text.trim() + " a été passée",Toast.LENGTH_SHORT).show();
-        }
-        return inflater
+        return inflater.inflate(R.layout.fragment_menu, container, false)
     }
 
     companion object {

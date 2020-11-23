@@ -37,7 +37,7 @@ class MapsFragment : Fragment() {
     companion object{
         val placeQuery: GooglePlaceQuery = GooglePlaceQuery(
             "type=restaurant", Session.current_session?.location ?: Location(""), 10.0,
-            SearchType.Nearby, "name", "formatted_address", "icon", "geometry"
+            SearchType.Nearby, "name", "place_id", "icon", "geometry", "adr_address", "website", "formatted_phone_number"
         );
     }
 

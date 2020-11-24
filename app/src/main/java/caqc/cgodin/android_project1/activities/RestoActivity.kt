@@ -1,7 +1,12 @@
 package caqc.cgodin.android_project1.activities
 
+import android.content.Intent
+import android.graphics.Color
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.service.textservice.SpellCheckerService
+import android.text.method.LinkMovementMethod
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -10,6 +15,8 @@ import android.widget.Toast
 import caqc.cgodin.android_project1.R
 import caqc.cgodin.android_project1.Session
 import caqc.cgodin.android_project1.Utils
+import caqc.cgodin.android_project1.sqlite.DatabaseHandler
+import caqc.cgodin.android_project1.sqlite.models.Commande
 import caqc.cgodin.android_project1.sqlite.models.Restaurant
 import caqc.cgodin.android_project1.ui.main.MapsFragment
 import caqc.cgodin.android_project1.ui.main.MenuFragment
@@ -50,8 +57,23 @@ class RestoActivity : ActivityExtension(R.id.RestoToolbar) {
     fun initTextViews(){
         findViewById<TextView>(R.id.resto_nom_label).text = resto.name;
         findViewById<TextView>(R.id.resto_adresse_label).text = resto.address
-        findViewById<TextView>(R.id.resto_website_label).text = resto.website
-        findViewById<TextView>(R.id.resto_adresse_label).text = resto.phone
+        initWebsite()
+        findViewById<TextView>(R.id.resto_phone_label).text = resto.phone
+    }
+
+    fun initWebsite(){
+        val web = findViewById<TextView>(R.id.resto_website_label)
+        if(resto.website == null || resto.website!!.isEmpty()){
+            web.text = "";
+            return;
+        }
+        web.text = resto.website;
+        web.movementMethod = LinkMovementMethod.getInstance()
+        web.setLinkTextColor(Color.BLUE);
+        web.setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(resto.website))
+            startActivity(browserIntent)
+        }
     }
 
     fun initButton(){
@@ -65,8 +87,13 @@ class RestoActivity : ActivityExtension(R.id.RestoToolbar) {
     }
 
     fun commander(v: View?){
-        val commande = Utils.getLangString(this, "commande").format(tb_commande.text.trim())
+        val commandContent = tb_commande.text.toString().trim();
+        val commande = Utils.getLangString(this, "commande").format(commandContent)
         Toast.makeText(applicationContext,commande,Toast.LENGTH_SHORT).show()
+        if(Session.logged) {
+            val cmd = Commande(resto.id!!, Session.current_session?.email!!, commandContent)
+            DatabaseHandler.database.insert(cmd);
+        }
         tb_commande.text = null
     }
 }

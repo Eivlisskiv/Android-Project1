@@ -15,10 +15,7 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import caqc.cgodin.android_project1.GooglePlaceQuery
-import caqc.cgodin.android_project1.R
-import caqc.cgodin.android_project1.SearchType
-import caqc.cgodin.android_project1.Session
+import caqc.cgodin.android_project1.*
 import caqc.cgodin.android_project1.sqlite.RestaurantRecyclerAdapter
 import caqc.cgodin.android_project1.sqlite.models.Restaurant
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -29,6 +26,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.libraries.places.api.Places
 import org.json.JSONObject
 
 
@@ -37,7 +35,7 @@ class MapsFragment : Fragment() {
     companion object{
         val placeQuery: GooglePlaceQuery = GooglePlaceQuery(
             "type=restaurant", Session.current_session?.location ?: Location(""), 10.0,
-            SearchType.Nearby, "name", "place_id", "icon", "geometry", "adr_address", "website", "formatted_phone_number"
+            SearchType.Nearby, "name", "place_id", "icon", "geometry", "formatted_address", "website", "formatted_phone_number"
         );
     }
 
@@ -45,6 +43,7 @@ class MapsFragment : Fragment() {
 
     private var REQUEST_CODE = 1;
 
+    private var initLocation: Location = Session.current_session?.getSessionLocation() ?: Location("");
     private var map: GoogleMap? = null;
     fun clear()  = map?.clear()
     private val callback = OnMapReadyCallback { googleMap ->
@@ -60,7 +59,7 @@ class MapsFragment : Fragment() {
 
         initiateMapSettings(googleMap)
         map = googleMap;
-        mapMarker(Session.current_session?.getSessionLocation(), "Current Location");
+        mapMarker(initLocation, "Current Location");
     }
 
     fun initiateMapSettings(googleMap: GoogleMap){
@@ -76,12 +75,16 @@ class MapsFragment : Fragment() {
         val marker = LatLng(location.latitude, location.longitude)
         map!!.addMarker(MarkerOptions().position(marker).title(name))
         if(moveCam)
-            map!!.moveCamera(CameraUpdateFactory.newLatLng(marker))
+            map!!.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 16F))
     }
 
     fun zoomTo(latitude: Double?, longitude: Double?) {
         val marker = LatLng(latitude ?: 0.0, longitude ?: 0.0)
-        //map!!.moveCamera(CameraUpdateFactory.newLatLng(marker))
+        if(map == null){
+            initLocation.latitude = latitude ?: 0.0;
+            initLocation.longitude = longitude ?: 0.0;
+            return;
+        }
         map!!.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 16F))
     }
 
@@ -155,6 +158,7 @@ class MapsFragment : Fragment() {
         intent.setPackage("com.google.android.apps.maps")
         startActivity(intent)
     }
+
 
     fun googlePlacesQuery(recyclerView: RestaurantListFragment, distance: Double, callback: (JSONObject) -> Unit) {
         placeQuery.location = Session.current_session?.getSessionLocation() ?: Location("")

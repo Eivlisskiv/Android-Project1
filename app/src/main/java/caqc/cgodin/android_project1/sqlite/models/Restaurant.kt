@@ -52,9 +52,9 @@ class Restaurant() : SqlEntity(Restaurant::class) {
         this.latitude = location.getDouble("lat")
         this.longitude = location.getDouble("lng")
 
-        this.address = json.getString("adr_address")
-        this.website = json.getString("website")
-        this.phone = json.getString("formatted_phone_number")
+        //this.address = json.getString("adr_address")
+        //this.website = json.getString("website")
+        //this.phone = json.getString("formatted_phone_number")
     }
 
     fun isFav() : Boolean = email != null

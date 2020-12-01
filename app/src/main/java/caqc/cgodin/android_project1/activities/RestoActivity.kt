@@ -37,8 +37,14 @@ class RestoActivity : ActivityExtension(R.id.RestoToolbar) {
 
         mapFrag = setFragment(MapsFragment::class, R.id.resto_map_frag)
         menuFrag = setFragment(MenuFragment::class, R.id.resto_menu_frag)
+
+        mapFrag.mapCallback = {
+            it.zoomTo(resto.latitude, resto.longitude)
+        }
+
         initActivityData()
-        mapFrag.zoomTo(resto.latitude, resto.longitude)
+
+
     }
 
     fun initActivityData(){
@@ -50,7 +56,7 @@ class RestoActivity : ActivityExtension(R.id.RestoToolbar) {
         resto = r;
 
         initTextViews()
-        Utils.setGlideImage(this, R.id.resto_icon_image, resto.logoUrl ?: "")
+        Utils.setGlideImage(this, R.id.resto_icon_image, resto.imageUrl)
         initButton()
     }
 

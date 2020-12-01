@@ -45,21 +45,14 @@ class MapsFragment : Fragment() {
 
     private var initLocation: Location = Session.current_session?.getSessionLocation() ?: Location("");
     private var map: GoogleMap? = null;
-    fun clear()  = map?.clear()
-    private val callback = OnMapReadyCallback { googleMap ->
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
 
+    fun clear()  = map?.clear()
+    var mapCallback: ((MapsFragment) -> Unit)? = null;
+    private val callback = OnMapReadyCallback { googleMap ->
         initiateMapSettings(googleMap)
         map = googleMap;
-        mapMarker(initLocation, "Current Location");
+
+        if(mapCallback != null) mapCallback!!(this);
     }
 
     fun initiateMapSettings(googleMap: GoogleMap){
@@ -166,7 +159,7 @@ class MapsFragment : Fragment() {
 
         placeQuery.request(callback)
 
-        refreshMarkers(recyclerView)
+        //refreshMarkers(recyclerView)
     }
 
     fun refreshMarkers(recyclerView: RestaurantListFragment){
@@ -174,15 +167,19 @@ class MapsFragment : Fragment() {
         handler.postDelayed(
             Runnable {
                 recyclerView.submitList(Session.current_session!!.searchResult)
-                map?.clear()
-                for(resto in Session.current_session!!.searchResult){
-                    Log.i("Resto", "${resto.name}: ${resto.latitude ?: 0.0}, ${resto.longitude ?: 0.0}")
-                    val marker = LatLng(resto.latitude ?: 0.0, resto.longitude ?: 0.0)
-                    map?.addMarker(MarkerOptions().position(marker).title(resto.name))
-                }
+                placeSearcheResultMarkers()
             },
             1000
         )
+    }
+
+    fun placeSearcheResultMarkers(){
+        map?.clear()
+        for(resto in Session.current_session!!.searchResult){
+            Log.i("Resto", "${resto.name}: ${resto.latitude ?: 0.0}, ${resto.longitude ?: 0.0}")
+            val marker = LatLng(resto.latitude ?: 0.0, resto.longitude ?: 0.0)
+            map?.addMarker(MarkerOptions().position(marker).title(resto.name))
+        }
     }
 
 

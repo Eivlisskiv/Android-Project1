@@ -1,7 +1,8 @@
 package caqc.cgodin.android_project1.sqlite.models
 
-import android.database.Cursor
-import caqc.cgodin.android_project1.AndroidProject1
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import caqc.cgodin.android_project1.Config
 import caqc.cgodin.android_project1.GooglePlaceQuery
 import caqc.cgodin.android_project1.Session
 import caqc.cgodin.android_project1.activities.ActivityExtension
@@ -10,6 +11,9 @@ import caqc.cgodin.android_project1.sqlite.DatabaseHandler
 import caqc.cgodin.android_project1.sqlite.SqlEntity
 import com.google.android.libraries.places.api.model.Place
 import org.json.JSONObject
+import java.io.InputStream
+import java.net.HttpURLConnection
+import java.net.URL
 
 class Restaurant() : SqlEntity(Restaurant::class) {
 
@@ -34,12 +38,20 @@ class Restaurant() : SqlEntity(Restaurant::class) {
     var name: String? = null
     var id: String? = null
     var logoUrl: String? = null
+    var image: String? = null;
     var address: String? = null;
     var website: String? = null;
     var phone: String? = null;
 
     var latitude: Double? = null
     var longitude: Double? = null
+
+    val imageUrl: String
+        get() =
+            if(this.image != null)
+                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${this.image}&key=${Config.googletoken}"
+            else this.logoUrl ?: "";
+
 
     constructor(email: String, name: String, id:String, logoUrl: String, latitude: Double, longitude: Double) : this(){
         this.email = email
@@ -54,9 +66,20 @@ class Restaurant() : SqlEntity(Restaurant::class) {
         this.name = json.getString("name")
         this.id = json.getString("place_id")
         this.logoUrl = json.getString("icon")
+        this.image = loadImage(json);
         val location = json.getJSONObject("geometry").getJSONObject("location")
         this.latitude = location.getDouble("lat")
         this.longitude = location.getDouble("lng")
+
+        this.address = json.getString("vicinity")
+    }
+
+    private fun loadImage(json:JSONObject): String? {
+        if(!json.has("photos")) return null;
+
+        val photosArray = json.getJSONArray("photos")
+        val object1 = photosArray.getJSONObject(0)
+        return object1.getString("photo_reference");
     }
 
     fun isFav() : Boolean = email != null
@@ -73,5 +96,14 @@ class Restaurant() : SqlEntity(Restaurant::class) {
         this.address = place.address;
         this.website = place.websiteUri.toString();
         this.phone = place.phoneNumber;
+    }
+
+    fun getImage(){
+        val url = URL("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${this.image}&key=AIzaSyDc9eKG7hymCORhdJzW6DMqR0y0lC_yIdA%22")
+        val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
+        connection.doInput = true
+        connection.connect()
+        val input: InputStream = connection.inputStream
+        val temp: Bitmap = BitmapFactory.decodeStream(input)
     }
 }

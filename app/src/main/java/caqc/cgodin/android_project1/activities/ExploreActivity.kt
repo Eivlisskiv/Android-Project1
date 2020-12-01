@@ -34,7 +34,18 @@ class ExploreActivity: ActivityExtension(R.id.explore_Toolbar) {
         mapFrag = setFragment(MapsFragment::class, R.id.explore_map_frag)
         listFrag = setFragment(RestaurantListFragment::class, R.id.explore_list_frag)
         listFrag.activityParent = this
+        listFrag.mapFrag = mapFrag;
         listFrag.addData = Session.current_session?.searchResult
+
+        mapFrag.mapCallback = {
+            if(Session.current_session?.searchResult.isNullOrEmpty())
+                it.mapMarker(Session.current_session?.location, "Current Location");
+            else {
+                val location = Session.current_session?.location;
+                it.zoomTo(location?.latitude, location?.longitude)
+                it.placeSearcheResultMarkers()
+            }
+        }
     }
 
     override fun onStart() {
@@ -73,6 +84,9 @@ class ExploreActivity: ActivityExtension(R.id.explore_Toolbar) {
 
     fun onClickSearch(v: View?){
         mapFrag.clear()
-        mapFrag.googlePlacesQuery(listFrag,distance + 0.00) { Session.parseJsonResult(it); }
+        mapFrag.googlePlacesQuery(listFrag,distance + 0.00) {
+            Session.parseJsonResult(it);
+            switchActivity(ExploreActivity::class)
+        }
     }
 }
